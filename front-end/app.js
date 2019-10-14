@@ -21,6 +21,8 @@ const navSlide = ()=>{
     });
 }
 navSlide();
+
+// if we have more apps, we would run them like what is underneath
 // const app = () =>{
 //     navSlide();
 //     navSlide();
