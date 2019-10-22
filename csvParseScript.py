@@ -33,8 +33,8 @@ def get_year(word):
 
 #This gets the .xlsx file and converts it into a 2D Array
 #Change 'sampletest.xlsx' to our dataset to us that in the variable 'book'
-book = xlrd.open_workbook('sampletest.xlsx')
-sheet = book.sheet_by_name('Sheet1')
+book = xlrd.open_workbook('analysis_498_first_page.xlsx')
+sheet = book.sheet_by_name('AllData')#'Sheet1' for sampletest, 'AllData' for analysis_498_first_page
 data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
 outcomeTopic = data[0][:]
 
