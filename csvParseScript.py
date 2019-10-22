@@ -30,6 +30,8 @@ def get_year(word):
 #d = dict(), cell = {block, .. .. ..}
 #matrixcell{cell1{block first int, event string, outcome topic string, score, year second int}}
 #dictionary in dictionary (nested)
+
+#This gets the .xlsx file and converts it into a 2D Array
 book = xlrd.open_workbook('sampletest.xlsx')
 sheet = book.sheet_by_name('Sheet1')
 data = [[sheet.cell_value(r, c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
@@ -38,6 +40,8 @@ outcomeTopic = data[0][:]
 blocklist = []
 yearlist = []
 counter1 = 1
+#gets the first and second numbers of the eventIDs and stores them into 
+#a block list and year list respectively
 for q in range((sheet.nrows)-1):
     block = get_block(data[counter1][0])
     blocklist.append(block)
@@ -45,14 +49,12 @@ for q in range((sheet.nrows)-1):
     yearlist.append(year)
     counter1 += 1
     
-#print(outcomeTopic)
-
 inner_dict = dict()
-outter_dict = dict()
 rowsx = 1
 colsx = 1
 count = 1
-
+#nested dictionary where the outer dictionary contains cells of inner 
+#dictionaries with the labels and values for "block, year, Event, Outcome, and Score
 for j in range((sheet.nrows)-1):
     for i in range((sheet.ncols)-1):
         inner_dict[count] = {}
