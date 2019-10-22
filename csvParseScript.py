@@ -71,6 +71,6 @@ for j in range((sheet.nrows)-1):
     rowsx +=1
     colsx = 1
     
-with open('parsedData.txt', 'w') as json_file:
+with open('parsedData.json', 'w') as json_file:
   json.dump(inner_dict, json_file)
     
