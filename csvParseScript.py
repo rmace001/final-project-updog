@@ -54,7 +54,7 @@ for q in range((sheet.nrows)-1):
 inner_dict = dict()
 rowsx = 1
 colsx = 1
-count = 1
+count = 0
 outer = []
 #nested dictionary where the outer dictionary contains cells of inner 
 #dictionaries with the labels and values for "block, year, Event, Outcome, and Score
@@ -66,12 +66,19 @@ for j in range((sheet.nrows)-1):
         inner_dict['Event'] = data[rowsx][0]
         inner_dict['OutcomeTopic'] = outcomeTopic[colsx]
         inner_dict['Score'] = data[rowsx][colsx]  
-        count += 1
+        with open('parsedData.json', 'a') as json_file:
+            json.dump(inner_dict, json_file)
+            json_file.write("\n")
         colsx += 1
-    outer.append(inner_dict)
+        #outer[count][0].append(inner_dict)
+        #count += 1
+    #outer.append(inner_dict)
     rowsx +=1
     colsx = 1
     
-with open('parsedData.json', 'w') as json_file:
-  json.dump(outer, json_file)
+#for k in range(((sheet.nrows)-1)
+    
+#with open('parsedData.json', 'w') as json_file:
+ #   json.dump(outer, json_file)
+  #  json_file.write("\n")
     
