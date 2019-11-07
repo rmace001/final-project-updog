@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    testing
+    <!-- <script src="../Highcharts/code/highcharts.js"></script>
+    <script src="../Highcharts/code/modules/heatmap.js"></script>
+    <script src="../Highcharts/code/modules/exporting.js"></script>
+    <script src="../Highcharts/code/modules/data.js"></script>
+    <script src="../Highcharts/code/modules/boost-canvas.js"></script>
+    <script src="../Highcharts/code/modules/boost.js"></script> -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/maps/modules/map.js"></script>
+<script src="https://code.highcharts.com/maps/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/offline-exporting.js"></script>
+
+    <div id="container" style="height: 400px; min-width: 310px; max-width: 1000px; margin: 0 auto"></div>
+
+    <script type="text/javascript">
+        function getColor(val) {
+            if (val < 0.5){
+                return '#3060cf';
+            }
+            else if(val > 0.5 && val < 0.6){
+                return '#fffbbc';
+            }
+            else {
+                return '#c4463a';
+            }
+        }
+        function getData(){
+            var datalist = [];
+            for (var i = 0; i < 558; i++){
+                for (var j = 0; j < 47; j++){
+                    datalist.push({
+                                    x: j,
+                                    y: i,
+                                    value: Math.random(),
+                                    name: 'E102'
+                                });
+                }
+            }
+            return datalist;
+        }
+    
+        Highcharts.chart('container', {
+            // data: {
+            //     csv: document.getElementById('csv').innerHTML
+            // },
+            chart: {
+                type: 'heatmap',
+                margin: [80, 80, 140, 130]
+            },
+            
+            title: {
+                text: 'Highcharts heat map',
+                align: 'left',
+                x: 40
+            },
+
+            subtitle: {
+                text: 'Curriculum Mapping using Mapradish',
+                align: 'left',
+                x: 40
+            },
+            xAxis: {
+                title: {
+                    text: 'Outcomes',
+                    reserveSpace: true
+                },
+                categories: ['GP Biochemistry and molecular biology', 'GP Biology of Cells', 'GP Human development and genetics'],
+                allowDecimals: false,
+                labels: {
+                    // y: 40,
+                    reserveSpace: true
+                }
+                
+            },
+            
+            yAxis: {
+                title: {
+                    text: 'Events'
+                },
+                categories: ['11001 The Cell']
+                // labels: {
+                //     format: '{value}'
+                // },
+                // minPadding: 0,
+                // maxPadding: 0,
+                // startOnTick: false,
+                // endOnTick: false,
+                // tickPositions: [0, 6, 12, 18, 24],
+                // tickWidth: 1,
+                // min: 0,
+                // max: 23
+            },
+            colorAxis: {
+                stops: [
+                    [0, '#3060cf'],
+                    [0.5, '#fffbbc'],
+                    [0.9, '#c4463a'],
+                    [1, '#c4463a']
+                ],
+                min: 0,
+                max: 1,
+                startOnTick: false,
+                endOnTick: false,
+                labels: {
+                    format: '{value}'
+                },
+            },
+            series: [{
+                name: 'Curriculum Mapping',
+                turboThreshold: 30000,
+                data: getData(),
+                boostThreshold: 30000,
+                borderWidth: 0,
+                nullColor: '#EFEFEF',
+                tooltip: {
+                    // headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
+                    pointFormat: '<b>{point.name} {point.value}</b>'
+                }
+            }]
+        });
+    </script>
+
+
+</body>
+</html>
