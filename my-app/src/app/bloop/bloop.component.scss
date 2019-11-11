@@ -1,3 +1,4 @@
+
 .webTheme{
     background-repeat: no-repeat;
     position: center;
@@ -66,23 +67,24 @@
 //   }
   
 //   //=== Button styling, semi-ignore
-//   .btn {
-//     background: none;
-//     border: none;
-//     cursor: pointer;
-//     line-height: 1.5;
-//     font: 700 1.2rem 'Roboto Slab', sans-serif;
-//     padding: 1em 2em;
-//     letter-spacing: 0.05rem;
+  .btn {
+    background-color: #55d7dc;
+    border: none;
+    cursor: pointer;
+    line-height: 1.5;
+    font: 700 1.2rem 'Roboto Slab', sans-serif;
+    padding: 1em 2em;
+    letter-spacing: 0.05rem;
     
-//     &:focus { outline: 2px dotted #55d7dc; }
-//   }
+    &:focus { outline: 2px dotted #55d7dc; }
+  }
   
 //   //=== Pen styling, ignore
-//   body { 
-//     background: #1f1a25;
-//     display: flex; 
-//     align-items: center;
-//     justify-content: center;
-//     min-height: 100vh;
-//   }
+  body { 
+    padding: 10px;
+    background: #1f1a25;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
