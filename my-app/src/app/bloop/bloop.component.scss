@@ -119,17 +119,50 @@
 }
 
 .map_btn{
+    // margin-top: 300px;
+    // margin-bottom: 30px;
+    margin: auto;
+    display: block;
+    align-items: center;
+    justify-content: center;
     background-color: maroon;
     color: white;
     border: none;
     cursor: pointer;
     line-height: 1.5;
     font: 700 1.2rem 'Roboto Slab', sans-serif;
-    padding: 1em;
+    padding: 2em;
     letter-spacing: 0.05rem;
     border-radius: 50%;
-    &:focus { outline: 2px dotted #55d7dc; }
-    display: flex;
+    position: absolute;
+    // &:focus { outline: 2px dotted #55d7dc; }
+}
+
+.map_btnn{
+    margin: auto;
+    display:block;
+    background-color: maroon;
+    color: white;
+    font: 700 1.2rem 'Roboto Slab', sans-serif;
+    padding: 2em;
+    letter-spacing: 0.05rem;
+    border-radius: 50%;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    line-height: 1.5;
+}
+
+.wrapper {
+    text-align: center;
+    margin-top: 200px;
+    margin-bottom: 30px;
+}
+
+.wrapper2{
+    text-align: center;
+}
+
+.p{
+    margin: 50px;
 }

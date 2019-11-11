@@ -6,7 +6,7 @@ import { RecentRunsComponent } from './recent-runs/recent-runs.component';
 
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent },
   { path: 'bloop', component: BloopComponent},
   { path: 'recent', component: RecentRunsComponent}
 ];
