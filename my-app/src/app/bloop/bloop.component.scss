@@ -68,12 +68,12 @@
   
 //   //=== Button styling, semi-ignore
   .btn {
-    background-color: #55d7dc;
+    background-color: lightseagreen;
     border: none;
     cursor: pointer;
     line-height: 1.5;
     font: 700 1.2rem 'Roboto Slab', sans-serif;
-    padding: 1em 2em;
+    padding: 1em;
     letter-spacing: 0.05rem;
     
     &:focus { outline: 2px dotted #55d7dc; }
@@ -88,3 +88,32 @@
     justify-content: center;
     min-height: 100vh;
   }
+
+.radioinlinewrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.radio{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.lab{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: 700 1.5rem 'Roboto Slab', sans-serif;
+    padding-top: 20px;
+    
+}
+
+.jumbotron{
+    padding: 0px;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    margin-bottom: 10;
+}

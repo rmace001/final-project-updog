@@ -12,26 +12,30 @@
 
 
 
-<div class="jumbotron text-center">
+<div class="jumbotron text-center p">
         <h1>Welcome to the Run Page</h1>
-        <h3>Choose a RUN ID:</h3>
+        <hr size = 300 noshade> 
+        <label class = "lab">Select a visualization type</label>
+    <mat-radio-group class= "radio" aria-label="Select an option">
+        <mat-radio-button value="1">Heatmap</mat-radio-button>
+        <mat-radio-button value="2">Visualization 2</mat-radio-button>
+        <mat-radio-button value="3">Visualization 3</mat-radio-button>
+    </mat-radio-group>
+</div>     
+    
+
+<div class="container p">
+    <div class="row">
+        <!-- <span class="fill"></span> -->
+        <div class="col-sm-4">
+            <h3>Choose a RUN ID:</h3>
+        </div>
+        <div class="col-sm-2">
             <button mat-button class = "btn"[matMenuTriggerFor]="RunList">List of Runs</button>
             <mat-menu #RunList="matMenu" yPosition="below">
                 <button mat-menu-item>Name of Run 1</button>
                 <button mat-menu-item>Name of Run 2</button>
             </mat-menu>
-</div>     
-      
-
-
-<div class="container">
-    <div class="row">
-        <span class="fill"></span>
-        <div class="col-sm-4">
-            
-        </div>
-        <div class="col-sm-2">
-           
         </div>
     </div>
 </div>
