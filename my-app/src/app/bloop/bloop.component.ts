@@ -11,5 +11,6 @@ export class BloopComponent implements OnInit {
 
   ngOnInit() {
   }
+  
 
 }

@@ -1,9 +1,36 @@
-<h1>Welcome!</h1>
+<div class="jumbotron jumbotronTransp jumbotron text-center">
+    <h1>Welcome to MapRadish</h1>
+</div>
+      
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <h3>Recent Runs</h3>
+        </div>
+    </div>
 
-<div class="play-container">
-    <p>You've clicked <span (click) = "countClick()">this </span>{{ clickCounter }} times.</p>
+        <!-- <div class="col"> -->
+    <app-recent-runs></app-recent-runs>
+        <!-- </div> -->
+    <!-- </div> -->
 </div>
 
+
+<div class="jumbotron jumbotronTransp jumbotron text-center" style = "padding-top:10px;">
+    <img src="assets/img/250px-Oluolu_Snorlax.png">
+    <p>Time to incorporate Alice's code!</p>
+    
+</div>
+
+
+
+
+<!-- 
+<div class="webTheme">
+<h1>Recent Runs</h1> -->
+<!-- <div class="play-container">
+    <p>You've clicked <span (click) = "countClick()">this </span>{{ clickCounter }} times.</p>
+</div>
 
 <div class="play-container">
     <p>
@@ -20,4 +47,7 @@
     <ng-template #none>
         <p>The click counter is <strong>not greater</strong> than 4.</p>
     </ng-template>
-</div>
+</div> -->
+<!-- <app-recent-runs></app-recent-runs>
+
+</div> -->
