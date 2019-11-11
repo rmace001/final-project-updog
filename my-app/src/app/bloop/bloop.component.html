@@ -22,38 +22,74 @@
         <mat-radio-button value="3">Visualization 3</mat-radio-button>
     </mat-radio-group> -->
 </div>     
-<div class="wrapper2">
-<label class = "lab">Select a visualization type</label>
-<mat-radio-group class= "radio" aria-label="Select an option">
-    <mat-radio-button value="1">Heatmap</mat-radio-button>
-    <mat-radio-button value="2">Visualization 2</mat-radio-button>
-    <mat-radio-button value="3">Visualization 3</mat-radio-button>
-</mat-radio-group>
-</div>
 
 
-<div class="container p">
-    <div class="row">
+
+<!-- <div class="container">
+    <div class="row"> -->
         <!-- <span class="fill"></span> -->
-        <div class="col-sm-4">
-            <h3>Choose a RUN ID:</h3>
+        <!-- <div class="col-sm-4">
+            
         </div>
-        <div class="col-sm-2">
+        <div class="col-sm-4">
+            <label class = "lab">Choose a Run:</label>
+            <div class="radio">
             <button mat-button class = "btn"[matMenuTriggerFor]="RunList">List of Runs</button>
             <mat-menu #RunList="matMenu" yPosition="below">
                 <button mat-menu-item>Name of Run 1</button>
                 <button mat-menu-item>Name of Run 2</button>
             </mat-menu>
         </div>
+        </div>
     </div>
+</div> -->
+
+<!-- <div class="wrap">
+<h4>Basic mat-select</h4>
+<mat-form-field>
+  <mat-label>Favorite food</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let food of foods" [value]="food.value">
+      {{food.viewValue}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+</div> -->
+
+<!-- <div class="wrapper3">
+<h4 class= "h4c">Select a Run</h4>
+<mat-form-field class = "hello">
+  <select matNativeControl required>
+    <option value="run1">Run 1</option>
+    <option value="run2">Run 2</option>
+    <option value="run3">Run 3</option>
+  </select>
+</mat-form-field>
+</div> -->
+
+<div class="wrapper2">
+        <label class = "lab">Select a visualization type</label>
+        <mat-radio-group class= "radio" aria-label="Select an option">
+            <mat-radio-button class = "radiospace" value="1">Heatmap</mat-radio-button>
+            <mat-radio-button class = "radiospace" value="2">Visualization 2</mat-radio-button>
+            <mat-radio-button class = "radiospace" value="3">Visualization 3</mat-radio-button>
+        </mat-radio-group>
 </div>
+
+<div class="wrapper3">
+        <mat-form-field>
+            <mat-label>Select a Run</mat-label>
+            <mat-select disableRipple>
+                <mat-option value="1">Run 1</mat-option>
+                <mat-option value="2">Run 2</mat-option>
+                <mat-option value="3">Run 3</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
 
 
 <div class="wrapper">
     <button mat-button class = "map_btnn">Map It!</button>
 </div>
-
-
-
 
 
