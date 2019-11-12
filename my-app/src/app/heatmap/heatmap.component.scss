@@ -118,35 +118,16 @@
     margin-bottom: 10;
 }
 
-.map_btn{
-    // margin-top: 300px;
-    // margin-bottom: 30px;
-    margin: auto;
-    display: block;
-    align-items: center;
-    justify-content: center;
-    background-color: maroon;
-    color: white;
-    border: none;
-    cursor: pointer;
-    line-height: 1.5;
-    font: 700 1.2rem 'Roboto Slab', sans-serif;
-    padding: 2em;
-    letter-spacing: 0.05rem;
-    border-radius: 50%;
-    position: absolute;
-    // &:focus { outline: 2px dotted #55d7dc; }
-}
 
 .map_btnn{
     margin: auto;
     display:block;
-    background-color: maroon;
-    color: white;
+    //background-color: maroon;
+    color: black;
     font: 700 1.2rem 'Roboto Slab', sans-serif;
-    padding: 2em;
+    padding: 1em;
     letter-spacing: 0.05rem;
-    border-radius: 50%;
+    //border-radius: 50%;
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -200,7 +181,6 @@
     font: 700 1.2rem 'Roboto Slab', sans-serif;
     padding: 2em;
     letter-spacing: 0.05rem;
-    border-radius: 50%;
     align-items: center;
     justify-content: center;
     cursor: pointer;

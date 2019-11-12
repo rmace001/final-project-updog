@@ -15,14 +15,20 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
+import { HeatmapComponent } from './heatmap/heatmap.component';
+import  { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
 
+import * as more from 'highcharts/highcharts-more.src';
+import * as exporting from 'highcharts/modules/exporting.src';
+import * as hizzlemap from 'highcharts/modules/heatmap.src';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     BloopComponent,
-    RecentRunsComponent
+    RecentRunsComponent,
+    HeatmapComponent
   ],
   imports: [
     BrowserModule,
@@ -35,9 +41,13 @@ import {MatCardModule} from '@angular/material/card';
     MatIconModule,
     MatRadioModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    ChartModule
+    
   ],
-  providers: [],
+  providers: [
+    { provide: HIGHCHARTS_MODULES, useFactory: () => [ more, exporting, hizzlemap ] }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
