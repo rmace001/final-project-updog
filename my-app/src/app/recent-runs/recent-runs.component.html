@@ -1,3 +1,4 @@
+<div class="mat-elevation-z8 data-table">
 <mat-table [dataSource]="dataSource">
     <!-- Id Column -->
     <ng-container matColumnDef="id">
@@ -19,6 +20,7 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
+</div>
 
 
 <!-- class="mat-elevation-z8" -->

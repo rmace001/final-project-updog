@@ -153,9 +153,16 @@
     line-height: 1.5;
 }
 
+.newbtn{
+    margin: auto;
+    display:block;
+    background-color: maroon;
+    color: white;
+}
+
 .wrapper {
     text-align: center;
-    margin-top: 200px;
+    margin-top: 100px;
     margin-bottom: 30px;
 }
 
@@ -184,3 +191,21 @@
 .radiospace{
     margin: 1em;
 }
+
+.rbutton{
+    //margin: auto;
+    display:block;
+    background-color: maroon;
+    color: white;
+    font: 700 1.2rem 'Roboto Slab', sans-serif;
+    padding: 2em;
+    letter-spacing: 0.05rem;
+    border-radius: 50%;
+    //align-items: center;
+    //justify-content: center;
+    cursor: pointer;
+    line-height: 1.5;
+}
+.button a {
+    margin-right: 8px;
+  }
