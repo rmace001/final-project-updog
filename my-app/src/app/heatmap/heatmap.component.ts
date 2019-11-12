@@ -10,6 +10,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 
 import { MatSort, MatSortable, MatPaginator, MatTableDataSource } from '@angular/material';
 import { chart } from 'highcharts/highcharts.src';
+// import { eventNames } from 'cluster';
 // import { DataSource } from '@angular/cdk/table';
 // import { ChartsModule } from 'ng2-charts';
 // import * as CanvasJS from '../../../assets/canvasjs.min.js';
@@ -36,23 +37,27 @@ export class HeatmapComponent{
     // this.showAllScores()
     // this.showAllEventNames()
     var datalist = [];
-    console.log("hi")
-    console.log(this.EventNameList.length)
-    console.log(this.OutcomeList.length)
-    console.log(this.OutcomeList[0])
-    console.log(this.EventNameList[0])
-    for (var i = 0; i < this.EventNameList.length; i++){
-        for (var j = 0; j < this.OutcomeList.length; j++){
+    // console.log("hi")
+    // console.log(this.EventNameList.length)
+    // console.log(this.OutcomeList.length)
+    // console.log(this.OutcomeList[0])
+    // console.log(this.EventNameList[0])
+    // console.log(this.ScoreList)
+    // console.log(this.ScoreList[0][0])
+    // console.log(this.ScoreList[0][1])
+    for (var i = 0; i < this.EventNameList.length; i++){ // row
+      var eventNames = this.ScoreList[i][0]
+        for (var j = 0; j < this.OutcomeList.length; j++){ // order or cell in row
             datalist.push({
                             // x: this.EventNameList[j],
                             x: j,
                             // y: this.OutcomeList[i],
                             y:i,
-                            value: Math.random(),
+                            value: this.ScoreList[i][1][j],
                             name: 'The Cell',
                             // event: 'The Cell',
                             // outcome: 'Introduction and General Biology'
-                            custom: {event: this.OutcomeList[i], outcome: this.EventNameList[j]}
+                            custom: {event: eventNames, outcome: this.OutcomeList[j]}
                         });
         }
     }
@@ -223,13 +228,13 @@ export class HeatmapComponent{
         title: {
             text: 'Highcharts heat map',
             align: 'left',
-            x: 40
+            x: 60
         },
     
         subtitle: {
             text: 'Curriculum Mapping using Mapradish',
             align: 'left',
-            x: 40
+            x: 60
         },
         credits: {
           enabled: false
@@ -242,12 +247,10 @@ export class HeatmapComponent{
             categories: this.OutcomeList,
             allowDecimals: false,
             labels: {
-                // y: 40,
                 reserveSpace: true
             }
             
         },
-        
         yAxis: {
             title: {
                 text: 'Events'
