@@ -139,43 +139,99 @@ app.get("/listRunWithSpecifics", (req, res) => {
         }
     })
 })
-//code to add cell to run1 collection
-// prRun = new R1({Block:1, Year:2, Event: "askd", OutcomeTopic: "hahah", Score: .4}) 
-// prRun.save()
-//     .then(run=>{
-//         console.log("added")
-// })
-//     .catch(err=>{
-//         console.log("couldn't add")
-//     })
+app.get("/listScorewithEventAndOutcome/:e/:o", (req, res) => {
+    eName = req.params.e
+    oName = req.params.o
+    R1.findOne({
+        'Eventlist.Event': eName
+        // ,
+        // 'Eventlist.Event_Outcome.OutcomeTopic': "GP Biochemistry and molecular biology"
+        // {
+        //     // "$elemMatch": 
+        //     // {"OutcomeTopic": "GP Biochemistry and molecular biology"}
+        //     "OutcomeTopic": "GP Biochemistry and molecular biology"
+        // }
+    }, 
+    {"Eventlist.Event.$": 1}, 
+    // {"Eventlist": {$slice: 1}}
+    //{"Eventlist.Event_Outcome": {$slice: 1}} 
+    // SLICE FURTHER LATER BECAUSE NOT WORKING RIGHT NOW!!! 
+    // CHEAT METHOD IS SEARCHING THROUGH RETURN VALUE AND RETURNING THAT INSTEAD
+    )
+    //.select("Block Year Eventlist.Event_Outcome.OutcomeTopic Eventlist.Event Eventlist.Event_Outcome.Score")
+    .lean().exec(function(err, run) {
+        if(err)
+        {
+            console.log("could not proccess " + err)
+        }
+        else
+        {
+            // fs.writeFile('shiyao.txt', util.inspect(run, false, null), (err)=>
+            // {
+            //     if (err) throw err;
+            //     console.log("saved for shiyao")
+            // })
+            pValue = run.Eventlist[0].Event_Outcome
+            notfound = true
+            size = pValue.length
+            i = 0
+            while(notfound && i < size)
+            {
+                if(pValue[i].OutcomeTopic == oName)
+                {
+                    holder = pValue[i]
+                    notfound = false
+                }
+                i++
+            }
+            res.json(holder)
+            //res.send(holder[])
+        }
+    })
+})
 
-//Code to print all runs in console
-// R1.find({}, (err, run)=>{
-//     console.log("hi from backend")
+// R1.findOne({
+//     'Eventlist.Event': '401001 Overview_Pituitary'
+//     // ,
+//     // 'Eventlist.Event_Outcome.OutcomeTopic': "GP Biochemistry and molecular biology"
+//     // {
+//     //     // "$elemMatch": 
+//     //     // {"OutcomeTopic": "GP Biochemistry and molecular biology"}
+//     //     "OutcomeTopic": "GP Biochemistry and molecular biology"
+//     // }
+// }, 
+// {"Eventlist.Event.$": 1}, 
+// // {"Eventlist": {$slice: 1}}
+// //{"Eventlist.Event_Outcome": {$slice: 1}} 
+// // SLICE FURTHER LATER BECAUSE NOT WORKING RIGHT NOW!!! 
+// // CHEAT METHOD IS SEARCHING THROUGH RETURN VALUE AND RETURNING THAT INSTEAD
+// )
+// //.select("Block Year Eventlist.Event_Outcome.OutcomeTopic Eventlist.Event Eventlist.Event_Outcome.Score")
+// .lean().exec(function(err, run) {
 //     if(err)
 //     {
 //         console.log("could not proccess " + err)
 //     }
 //     else
 //     {
-//         console.log(run)
-//     }
-// })
-
-// R1.findOne({Year: 0, Block: 4})
-//     .select("Year Block Eventlist.Event Eventlist.Event_Outcome.OutcomeTopic Eventlist.Event_Outcome.Score")
-//     .lean().exec(function(err, run) {
-//     if(err)
-//     {
-//         console.log("could not proccess " + err)
-//     }
-//     else
-//     {
-//         fs.writeFile('shiyao.txt', util.inspect(run, false, null), (err)=>
+//         // fs.writeFile('shiyao.txt', util.inspect(run, false, null), (err)=>
+//         // {
+//         //     if (err) throw err;
+//         //     console.log("saved for shiyao")
+//         // })
+//         pValue = run.Eventlist[0].Event_Outcome
+//         notfound = true
+//         size = pValue.length
+//         i = 0
+//         while(notfound && i < size)
 //         {
-//             if (err) throw err;
-//             console.log("saved for shiyao")
-//         })
-//         //console.log(util.inspect(run, false, null))
+//             if(pValue[i].OutcomeTopic == "GP Biochemistry and molecular biology")
+//             {
+//                 holder = pValue[i]
+//                 notfound = false
+//             }
+//             i++
+//         }
+//         console.log(holder)
 //     }
-//     })
+// })
