@@ -27,6 +27,7 @@ export class RecentRunsComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'something'];
   dataSource = ELEMENT_DATA;
   ngOnInit() {
+    console.log("hi from recent")
   }
 
 }
