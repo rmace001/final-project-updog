@@ -69,11 +69,12 @@
 
 <div class="wrapper2">
         <label class = "lab">Select a visualization type</label>
-        <mat-radio-group class= "radio" aria-label="Select an option">
+        <mat-radio-group class= "radio" aria-label="Select an option" [(ngModel)]="radioChoice">
             <mat-radio-button class = "radiospace" value="1">Heatmap</mat-radio-button>
-            <mat-radio-button class = "radiospace" value="2">Visualization 2</mat-radio-button>
+            <mat-radio-button class = "radiospace" value="2">PieChart</mat-radio-button>
             <mat-radio-button class = "radiospace" value="3">Visualization 3</mat-radio-button>
         </mat-radio-group>
+        <!-- <div>Your favorite season is: {{favoriteSeason}}</div> -->
 </div>
 
 <div class="wrapper3">
@@ -88,7 +89,9 @@
     </div>
 
 
-<div class="wrapper">
-    <button mat-raised-button class = "map_btnn" routerLink="/heatmap">Map It!</button>
+<div class="wrapper"  *ngIf="radioChoice == 1?true:false">
+    <button mat-raised-button class = "map_btnn" routerLink="/heatmap">Map It</button>
 </div>
-
+<div class="wrapper"  *ngIf="radioChoice == 2?true:false">
+    <button mat-raised-button class = "map_btnn" routerLink="/display-chart">Map It</button>
+</div>

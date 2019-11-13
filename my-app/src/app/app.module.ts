@@ -38,6 +38,7 @@ import {
   MatSortModule,
   MatAutocompleteModule
 } from '@angular/material';
+import { DisplayChartComponent } from './display-chart/display-chart.component';
 
 // const routes: Routes = [
 //   // {path: 'create', component: CreateComponent},
@@ -57,7 +58,8 @@ import {
     HomeComponent,
     BloopComponent,
     RecentRunsComponent,
-    HeatmapComponent
+    HeatmapComponent,
+    DisplayChartComponent
   ],
   imports: [
     BrowserModule,
