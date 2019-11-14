@@ -11,15 +11,13 @@ import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component : LoginComponent},
+  { path: 'home', component: HomeComponent },
   { path: 'bloop', component: BloopComponent},
   { path: 'recent', component: RecentRunsComponent},
   { path: 'heatmap', component: HeatmapComponent},
 
   { path: 'display-chart',component: DisplayChartComponent},
-
-
-  { path: 'login', component: LoginComponent}
 
 ];
 
