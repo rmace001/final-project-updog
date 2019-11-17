@@ -45,7 +45,8 @@ export class HeatmapComponent{
     // console.log(this.ScoreList)
     // console.log(this.ScoreList[0][0])
     // console.log(this.ScoreList[0][1])
-    for (var i = 0; i < this.EventNameList.length; i++){ // row
+    // for (var i = 0; i < this.EventNameList.length; i++){ // row
+    for (var i = 0; i < 20; i++){ // row
       var eventNames = this.ScoreList[i][0]
         for (var j = 0; j < this.OutcomeList.length; j++){ // order or cell in row
             datalist.push({
@@ -223,7 +224,10 @@ export class HeatmapComponent{
       this.chart = new Chart({
         chart: {
           type: 'heatmap',
-          margin: [80, 80, 140, 130]
+          height: 1600,
+          width: 1700,
+          margin: [80, 80, 200, 130]
+        //   spacingBottom: 100,
         },
         title: {
             text: 'Highcharts heat map',
@@ -247,7 +251,7 @@ export class HeatmapComponent{
             categories: this.OutcomeList,
             allowDecimals: false,
             labels: {
-                reserveSpace: true
+                // reserveSpace: true
             }
             
         },
@@ -258,6 +262,11 @@ export class HeatmapComponent{
             categories: this.EventNameList,
             
         },
+        legend:{
+            align: 'center',
+            verticalAlign: 'top',
+            floating: true        
+       },
         colorAxis: {
             stops: [
                 [0, '#3060cf'],
@@ -265,6 +274,7 @@ export class HeatmapComponent{
                 [0.9, '#c4463a'],
                 [1, '#c4463a']
             ],
+            // layout: 'vertical',
             min: 0,
             max: 1,
             startOnTick: false,
@@ -292,7 +302,7 @@ export class HeatmapComponent{
             nullColor: '#EFEFEF',
             tooltip: {
                 // headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
-                pointFormat: '<b>{point.custom.event} {point.custom.outcome} {point.value}</b>'
+                pointFormat: '{point.custom.event} {point.custom.outcome} <b>{point.value}</b>'
             }
             
           }
