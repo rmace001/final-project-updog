@@ -6,6 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  displayName: boolean = true;
+  displayName: boolean = false;
+  constructor() { this.displayName = false; }
+
+  hide() { this.displayName = false; }
+
+  show() { this.displayName = true; }
+
+  toggle() { this.displayName = !this.displayName; }
   title = 'my-app';
 }

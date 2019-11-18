@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-home',
@@ -6,13 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  displayName: true;
   clickCounter: number = 0;
   name: string = '';
 
-  constructor() { }
+  constructor(public app: AppComponent) { }
 
   ngOnInit() {
+    this.app.show();
   }
 
   countClick(){
