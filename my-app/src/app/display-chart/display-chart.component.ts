@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapChart, Chart } from 'angular-highcharts';
+import { AppComponent } from '../app.component';
 
 
 import { RunService } from '../run.service' 
@@ -23,9 +24,16 @@ export class DisplayChartComponent implements OnInit {
     ScoreList
     alllist
     chart
-    constructor(private runService: RunService, private router: Router) { }
+    showSpinner: boolean = false;
+    constructor(private runService: RunService, private router: Router, public app: AppComponent) { }
     r: Run[] // class has element r of type array of Runs
-  getData(){ // returns list of objects i.e. the datalist for my chart
+    loadData(){
+      this.showSpinner = true;
+      setTimeout(() =>{
+        this.showSpinner = false;
+      }, 4500);
+    } 
+    getData(){ // returns list of objects i.e. the datalist for my chart
   
     var datalist = [];
     for (var i = 0; i < this.EventNameList.length; i++){ // row
@@ -46,7 +54,7 @@ export class DisplayChartComponent implements OnInit {
   
 
   ngOnInit() {
-   
+    this.app.show();
    this.runService.showOutcomeTopics().subscribe((val: OutcomeList) => //send http request and results are subscribed into val
     {
       

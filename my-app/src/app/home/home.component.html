@@ -1,10 +1,11 @@
 <div class="jumbotron text-center">
     <h1>Welcome to MapRadish</h1>
 </div>
-
-<button (click)="loadData()">Load</button>
-<div *ngIf="showSpinner">
-    <div class="loader"></div>
+<div align="center">
+    <button (click)="loadData()">Load</button>
+    <div *ngIf="showSpinner">
+        <div class="loader"></div>
+    </div>
 </div>
 
 <div class="container-fluid">

@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   displayName: boolean = false;
+  
+
   constructor() { this.displayName = false; }
 
   hide() { this.displayName = false; }

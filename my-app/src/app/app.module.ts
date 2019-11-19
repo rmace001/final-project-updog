@@ -36,9 +36,11 @@ import {
   MatRippleModule,
   MatPaginatorModule,
   MatSortModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { DisplayChartComponent } from './display-chart/display-chart.component';
+import { RegisterComponent } from './register/register.component';
 
 // const routes: Routes = [
 //   // {path: 'create', component: CreateComponent},
@@ -52,6 +54,10 @@ import { DisplayChartComponent } from './display-chart/display-chart.component';
 //   { path: 'recent', component: RecentRunsComponent},
 //   { path: 'heatmap', component: HeatmapComponent}
 // ];
+const MaterialComponents = [
+  MatProgressSpinnerModule
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +67,9 @@ import { DisplayChartComponent } from './display-chart/display-chart.component';
     HeatmapComponent,
     DisplayChartComponent,
 
-    LoginComponent
+    LoginComponent,
+
+    RegisterComponent
 
   ],
   imports: [

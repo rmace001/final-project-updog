@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapChart, Chart } from 'angular-highcharts';
+import { AppComponent } from '../app.component';
 
 
 import { RunService } from '../run.service' 
@@ -28,11 +29,19 @@ export class HeatmapComponent{
     ScoreList
     alllist
     chart
-    constructor(private runService: RunService, private router: Router) { }
+    showSpinner: boolean = false;
+    constructor(private runService: RunService, private router: Router, public app: AppComponent) { }
     r: Run[] // class has element r of type array of Runs
     // @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
     // @ViewChild(MatSort, {static: true}) sort: MatSort;
-  getData(){ // returns list of objects i.e. the datalist for my chart
+  
+    // loadData(){
+    //   this.showSpinner = true;
+    //   setTimeout(() =>{
+    //     this.showSpinner = false;
+    //   }, 4500);
+    // }
+    getData(){ // returns list of objects i.e. the datalist for my chart
     // this.showAllOutcomes()
     // this.showAllScores()
     // this.showAllEventNames()
@@ -154,7 +163,7 @@ export class HeatmapComponent{
   // constructor() { }
 
   ngOnInit() {
-   
+    this.app.show();
    this.runService.showOutcomeTopics().subscribe((val: OutcomeList) => //send http request and results are subscribed into val
     {
       
