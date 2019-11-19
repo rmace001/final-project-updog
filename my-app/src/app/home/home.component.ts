@@ -9,7 +9,14 @@ import { AppComponent } from '../app.component';
 export class HomeComponent implements OnInit {
   clickCounter: number = 0;
   name: string = '';
+  showSpinner: boolean = false;
 
+  loadData(){
+    this.showSpinner = true;
+    setTimeout(() =>{
+      this.showSpinner = false;
+    }, 6000);
+  }
   constructor(public app: AppComponent) { }
 
   ngOnInit() {
