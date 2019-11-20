@@ -33,17 +33,16 @@ export class RunService {
     var url = this.serverURLi + "/listScorewithEventAndOutcome/" + e  + "/" + o
     return this.http.get(url) 
   }
-//   postCelltoRun(b:Number, y:Number, e:String, o:String, s:Number)
-//   {
-//     const p = {
-//       Block: b,
-//       Year: y,
-//       Event: e,
-//       OutcomeTopic: o,
-//       Score: s
-//     }
-//     //console.log("adding person")
-//     var url = this.serverURLi + "/addCelltoRun1"
-//     return this.http.post(url, p) // http post to localhost:4000/addCelltoRun1
-//   }
+  postCelltoRun(f:String, l:String, u:String, p:String)
+  {
+    const q = {
+      Firstname: f,
+      Lastname: l,
+      Username: u,
+      Password: p
+    }
+    console.log("adding person")
+    var url = this.serverURLi + "/addCelltoRun1"
+    return this.http.post(url, q) // http post to localhost:4000/addCelltoRun1
+  }
 }

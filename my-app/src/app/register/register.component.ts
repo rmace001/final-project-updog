@@ -1,17 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
+import { RunService } from '../run.service'
+import { Run } from '../run.model'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
+
 export class RegisterComponent implements OnInit {
   isValid: boolean;
-  constructor(public app: AppComponent) { }
+  constructor(private runService: RunService, private router: Router,public app: AppComponent) { }
+  r: Run[]
 
   ngOnInit() {
     this.app.hide();
+    
   }
 
   inputClear(){
