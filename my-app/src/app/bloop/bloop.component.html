@@ -77,13 +77,16 @@
         <!-- <div>Your favorite season is: {{favoriteSeason}}</div> -->
 </div>
 
-<div class="wrapper3">
+<div class="wrapper3" *ngIf="this.list_a ?true:false" >
         <mat-form-field>
             <mat-label>Select a Run</mat-label>
             <mat-select disableRipple>
-                <mat-option value="1">Run 1</mat-option>
+                    <mat-option value="1">{{this.list_a[0]}}</mat-option>
+                    <mat-option value="2">{{this.list_a[1]}}</mat-option>
+                    <mat-option value="3">Run 3</mat-option>
+                <!-- <mat-option value="1">Run 1</mat-option>
                 <mat-option value="2">Run 2</mat-option>
-                <mat-option value="3">Run 3</mat-option>
+                <mat-option value="3">Run 3</mat-option> -->
             </mat-select>
         </mat-form-field>
     </div>

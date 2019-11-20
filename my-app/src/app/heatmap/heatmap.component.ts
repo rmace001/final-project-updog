@@ -189,7 +189,7 @@ export class HeatmapComponent implements OnInit {
   
   displayColumns = ['block', 'year', 'event', 'outcome topic', 'score'] // needed for UI table..?
   showAllRuns(){
-    this.runService.showRuns().subscribe((val: Run[]) => //send http request and results are subscribed into val
+    this.runService.showRuns('run1').subscribe((val: Run[]) => //send http request and results are subscribed into val
     {
       console.log("hello from console")
       //this.r = val; //send the results the element r 
