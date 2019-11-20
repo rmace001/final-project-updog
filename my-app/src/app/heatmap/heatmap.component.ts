@@ -33,8 +33,8 @@ export class HeatmapComponent implements OnInit {
         chart: {
             type: 'heatmap',
             zoomType: 'xy',
-            height: 1600,
-            width: 1700,
+            height: 1700,
+            width: 1200,
             margin: [80, 5, 400, 230],
             spacing: [10, 10, 100, 10]
           },
@@ -63,7 +63,10 @@ export class HeatmapComponent implements OnInit {
               allowDecimals: false,
               labels: {
                   // reserveSpace: true
-              }
+              },
+              scrollbar: {
+                enabled: true
+            }
               
           },
           yAxis: {
@@ -145,9 +148,8 @@ export class HeatmapComponent implements OnInit {
     // console.log(this.ScoreList)
     // console.log(this.ScoreList[0][0])
     // console.log(this.ScoreList[0][1])
-    // for (var i = 0; i < this.EventNameList.length; i++){ // row
-    // for (var i = 0; i = this.EventNameList.length; i++){ // row
-    for (var i = 0; i < 100; i++){ // row
+    for (var i = 0; i < this.EventNameList.length; i++){ // row
+    // for (var i = 0; i < 100; i++){ // row
       var eventNames = this.ScoreList[i][0]
         for (var j = 0; j < this.OutcomeList.length; j++){ // order or cell in row
             datalist.push({
@@ -167,33 +169,15 @@ export class HeatmapComponent implements OnInit {
   }
   
   //getData2 is for getting initial dummy data to display while subscribe function is running
-  getData2(){ // returns list of objects i.e. the datalist for my chart
-    // this.showAllOutcomes()
-    // this.showAllScores()
-    // this.showAllEventNames()
+  getData2(){ // returns list of dummy objects
     var datalist = [];
-    
-    // console.log("hi")
-    // console.log(this.EventNameList.length)
-    // console.log(this.OutcomeList.length)
-    // console.log(this.OutcomeList[0])
-    // console.log(this.EventNameList[0])
-    // console.log(this.ScoreList)
-    // console.log(this.ScoreList[0][0])
-    // console.log(this.ScoreList[0][1])
-    // for (var i = 0; i < this.EventNameList.length; i++){ // row
     for (var i = 0; i < 500; i++){ // row
-    //   var eventNames = this.ScoreList[i][0]
         for (var j = 0; j < 45; j++){ // order or cell in row
             datalist.push({
-                            // x: this.EventNameList[j],
                             x: j,
-                            // y: this.OutcomeList[i],
                             y:i,
                             value: Math.random(),
                             name: 'The Cell',
-                            // event: 'The Cell',
-                            // outcome: 'Introduction and General Biology'
                             custom: {event: 'eventNames', outcome: 'this.OutcomeList[j]'}
                         });
         }
