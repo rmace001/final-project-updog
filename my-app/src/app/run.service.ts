@@ -8,9 +8,9 @@ export class RunService {
 
   serverURLi = "http://localhost:4000" // this is the server the backend is running from 
   constructor(private http: HttpClient) {}
-  showRuns()
+  showRuns(run: string)
   {
-    var url = this.serverURLi + "/listFromRun"
+    var url = this.serverURLi + "/listFromRun/" + run
     return this.http.get(url) // http get from localhost:4000/listFromRun1
   }
   showScores()
@@ -33,6 +33,22 @@ export class RunService {
     var url = this.serverURLi + "/listScorewithEventAndOutcome/" + e  + "/" + o
     return this.http.get(url) 
   }
+  listCollections()
+  {
+    var url = this.serverURLi + "/listCollections"
+    return this.http.get(url)
+  }
+  showEventswithSpecs(y, b)
+  {
+    var url = this.serverURLi + "/listEventswithSpecifics/" + y  + "/" + b
+    return this.http.get(url) 
+  }
+  showRunwithSpecs(y,b)
+  {
+    var url = this.serverURLi + "/listRunWithSpecifics/" + y  + "/" + b
+    return this.http.get(url) 
+  }
+
 //   postCelltoRun(b:Number, y:Number, e:String, o:String, s:Number)
 //   {
 //     const p = {
