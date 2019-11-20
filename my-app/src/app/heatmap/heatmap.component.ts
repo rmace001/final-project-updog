@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapChart, Chart } from 'angular-highcharts';
 
-
+import * as Highcharts from 'highcharts';
 import { RunService } from '../run.service' 
 import { Run, OutcomeList} from '../run.model'
 import { MatTableModule } from '@angular/material/table';
@@ -21,13 +21,112 @@ import { chart } from 'highcharts/highcharts.src';
   templateUrl: './heatmap.component.html',
   styleUrls: ['./heatmap.component.scss']
 })
-export class HeatmapComponent{
+export class HeatmapComponent implements OnInit {
     DataSource1
     OutcomeList
     EventNameList
     ScoreList
     alllist
-    chart
+    public chart: any;
+    public dynamic_data: any; 
+    public options: any = {
+        chart: {
+            type: 'heatmap',
+            zoomType: 'xy',
+            height: 1600,
+            width: 1700,
+            margin: [80, 5, 400, 230],
+            spacing: [10, 10, 100, 10]
+          },
+          title: {
+              text: 'Highcharts heat map',
+              align: 'left',
+              x: 60
+          },
+      
+          subtitle: {
+              text: 'Curriculum Mapping using Mapradish',
+              align: 'left',
+              x: 60
+          },
+          credits: {
+            enabled: false
+          },
+          xAxis: {
+              title: {
+                  text: 'Outcomes',
+                  reserveSpace: true
+              },
+            //   categories: this.OutcomeList,
+            // make sure to update xAxis categories to this.OutcomeList
+              categories: ['Outcome 1'],
+              allowDecimals: false,
+              labels: {
+                  // reserveSpace: true
+              }
+              
+          },
+          yAxis: {
+              title: {
+                  text: 'Events'
+              },
+            //   categories: this.EventNameList,
+              // be sure to update the yAxis categories in the update funciton
+              categories: ['this.EventNameList'],
+              scrollbar: {
+                enabled: true
+            }
+            //   tickLength: 100
+              
+          },
+          legend:{
+              align: 'center',
+              verticalAlign: 'top',
+              floating: true        
+         },
+          colorAxis: {
+              stops: [
+                  [0, '#3060cf'],
+                  [0.5, '#fffbbc'],
+                  [0.9, '#c4463a'],
+                  [1, '#c4463a']
+              ],
+              // layout: 'vertical',
+              min: 0,
+              max: 1,
+              startOnTick: false,
+              endOnTick: false,
+              labels: {
+                  format: '{value}'
+              },
+          },
+          plotOptions: {
+              series: {
+                  
+              },
+              heatmap: {
+                  rowsize: 1
+              }
+          },
+          series: [
+            {
+              type: undefined,
+              name: 'Curriculum Mapping',
+              turboThreshold: 60000,
+            //   data: this.getData(),
+              // be sure to update the series data in the update function
+              data: this.getData2(),
+              boostThreshold: 60000,
+              borderWidth: 0,
+              nullColor: '#EFEFEF',
+              tooltip: {
+                  // headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
+                  pointFormat: '{point.custom.event} {point.custom.outcome} <b>{point.value}</b>'
+              }
+              
+            }
+          ]
+    };
     constructor(private runService: RunService, private router: Router) { }
     r: Run[] // class has element r of type array of Runs
     // @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -37,6 +136,7 @@ export class HeatmapComponent{
     // this.showAllScores()
     // this.showAllEventNames()
     var datalist = [];
+    
     // console.log("hi")
     // console.log(this.EventNameList.length)
     // console.log(this.OutcomeList.length)
@@ -46,14 +146,15 @@ export class HeatmapComponent{
     // console.log(this.ScoreList[0][0])
     // console.log(this.ScoreList[0][1])
     // for (var i = 0; i < this.EventNameList.length; i++){ // row
-    for (var i = 0; i < 20; i++){ // row
+    // for (var i = 0; i = this.EventNameList.length; i++){ // row
+    for (var i = 0; i < 100; i++){ // row
       var eventNames = this.ScoreList[i][0]
         for (var j = 0; j < this.OutcomeList.length; j++){ // order or cell in row
             datalist.push({
                             // x: this.EventNameList[j],
                             x: j,
                             // y: this.OutcomeList[i],
-                            y:i,
+                            y: i,
                             value: this.ScoreList[i][1][j],
                             name: 'The Cell',
                             // event: 'The Cell',
@@ -64,6 +165,44 @@ export class HeatmapComponent{
     }
     return datalist;
   }
+  
+  //getData2 is for getting initial dummy data to display while subscribe function is running
+  getData2(){ // returns list of objects i.e. the datalist for my chart
+    // this.showAllOutcomes()
+    // this.showAllScores()
+    // this.showAllEventNames()
+    var datalist = [];
+    
+    // console.log("hi")
+    // console.log(this.EventNameList.length)
+    // console.log(this.OutcomeList.length)
+    // console.log(this.OutcomeList[0])
+    // console.log(this.EventNameList[0])
+    // console.log(this.ScoreList)
+    // console.log(this.ScoreList[0][0])
+    // console.log(this.ScoreList[0][1])
+    // for (var i = 0; i < this.EventNameList.length; i++){ // row
+    for (var i = 0; i < 500; i++){ // row
+    //   var eventNames = this.ScoreList[i][0]
+        for (var j = 0; j < 45; j++){ // order or cell in row
+            datalist.push({
+                            // x: this.EventNameList[j],
+                            x: j,
+                            // y: this.OutcomeList[i],
+                            y:i,
+                            value: Math.random(),
+                            name: 'The Cell',
+                            // event: 'The Cell',
+                            // outcome: 'Introduction and General Biology'
+                            custom: {event: 'eventNames', outcome: 'this.OutcomeList[j]'}
+                        });
+        }
+    }
+    return datalist;
+  } // end getData2()
+  
+  
+  
   displayColumns = ['block', 'year', 'event', 'outcome topic', 'score'] // needed for UI table..?
   showAllRuns(){
     this.runService.showRuns().subscribe((val: Run[]) => //send http request and results are subscribed into val
@@ -221,93 +360,13 @@ export class HeatmapComponent{
       this.ScoreList = final_row_Event_cell_list
     //   console.log(this.ScoreList)
       this.alllist = this.ScoreList
-      this.chart = new Chart({
-        chart: {
-          type: 'heatmap',
-          height: 1600,
-          width: 1700,
-          margin: [80, 80, 200, 130]
-        //   spacingBottom: 100,
-        },
-        title: {
-            text: 'Highcharts heat map',
-            align: 'left',
-            x: 60
-        },
-    
-        subtitle: {
-            text: 'Curriculum Mapping using Mapradish',
-            align: 'left',
-            x: 60
-        },
-        credits: {
-          enabled: false
-        },
-        xAxis: {
-            title: {
-                text: 'Outcomes',
-                reserveSpace: true
-            },
-            categories: this.OutcomeList,
-            allowDecimals: false,
-            labels: {
-                // reserveSpace: true
-            }
-            
-        },
-        yAxis: {
-            title: {
-                text: 'Events'
-            },
-            categories: this.EventNameList,
-            
-        },
-        legend:{
-            align: 'center',
-            verticalAlign: 'top',
-            floating: true        
-       },
-        colorAxis: {
-            stops: [
-                [0, '#3060cf'],
-                [0.5, '#fffbbc'],
-                [0.9, '#c4463a'],
-                [1, '#c4463a']
-            ],
-            // layout: 'vertical',
-            min: 0,
-            max: 1,
-            startOnTick: false,
-            endOnTick: false,
-            labels: {
-                format: '{value}'
-            },
-        },
-        plotOptions: {
-            series: {
-                
-            },
-            heatmap: {
-                
-            }
-        },
-        series: [
-          {
-            type: undefined,
-            name: 'Curriculum Mapping',
-            turboThreshold: 60000,
-            data: this.getData(),
-            boostThreshold: 60000,
-            borderWidth: 0,
-            nullColor: '#EFEFEF',
-            tooltip: {
-                // headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
-                pointFormat: '{point.custom.event} {point.custom.outcome} <b>{point.value}</b>'
-            }
-            
-          }
-        ]
-      });
+      this.options.series[0].data = this.getData();
+      
+      this.options.xAxis.categories = this.OutcomeList;
+      this.options.yAxis.categories = this.EventNameList;
+    //   this.chart = new Chart(options: this.options);
+    //   this.chart = Highcharts.chart('container', this.options);
+      this.chart = new Chart(this.options);
     })
     })
       
