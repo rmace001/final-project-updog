@@ -7,39 +7,56 @@ import { AppComponent } from '../app.component';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-
+  isValid: boolean;
   constructor(public app: AppComponent) { }
 
   ngOnInit() {
     this.app.hide();
   }
 
+  inputClear(){
+    (<HTMLInputElement>document.getElementById("inputFirst")).value = "";
+    (<HTMLInputElement>document.getElementById("inputLast")).value = "";
+    (<HTMLInputElement>document.getElementById("inputUser")).value = "";
+    (<HTMLInputElement>document.getElementById("inputPass")).value = "";
+    (<HTMLInputElement>document.getElementById("inputOtherPass")).value = "";
+  }
+
   validationCheck(){
-    var fr = new String(document.getElementById("inputFirst"));
-    var lt = new String(document.getElementById("inputLast"));
-    var us = new String(document.getElementById("inputUser"));
-    var pw = new String(document.getElementById("inputPass"));
-    var opw = new String(document.getElementById("inputOtherPass"));
-    var val:boolean = false;
-    if((fr.length <= 1)){
+    var fr = (<HTMLInputElement>document.getElementById("inputFirst")).value;
+    var lt = (<HTMLInputElement>document.getElementById("inputLast")).value;
+    var us = (<HTMLInputElement>document.getElementById("inputUser")).value;
+    var pw = (<HTMLInputElement>document.getElementById("inputPass")).value;
+    var opw = (<HTMLInputElement>document.getElementById("inputOtherPass")).value;
+    //list for first name = [i]
+    //list for last name = [i]
+    //list for user = [i]
+    //list for password = [i]
+    if((fr.length) <= 1){
       alert("First name must be at least 2 characters long.");
+      this.isValid = false;
     }
-    else if(lt.length <= 1){
+    else if((lt.length) <= 1){
       alert("Last name must be at least 2 characters long.");
+      this.isValid = false;
     }
-    else if(us.length < 6){
+    else if((us.length) < 6){
       alert("Username must be at least 6 characters long.");
+      this.isValid = false;
     }
-    else if(pw.length < 6){
+    else if((pw.length) < 6){
       alert("Passwords must be at least 6 characters long.");
-      if(pw != opw){
-        alert("Re-typed password does not match the first password entered.");
-      }
+      this.isValid = false;
+    }
+    else if(pw != opw){
+      alert("Re-typed password does not match the first password entered.");
+      this.isValid = false;
     }
     else{
       alert("Your account has been created!");
-      val = true;
+      this.isValid = true;
+      this.inputClear();
     }
-    return val;
+    return this.isValid;
   }
 }
