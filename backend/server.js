@@ -204,6 +204,21 @@ app.post("/addCelltoRun1", (req, res) =>
         res.status(400).send("failed to create new cell") //return status 400 if insert failed
     })
 })
+
+app.get("/validUser/:user/:pass", (req, res)=>
+{
+    var u = req.params.user
+    var p = req.params.pass
+    UserModel.findOne({Username: u, Password: p})
+    .select("_id Firstname Lastname").lean().exec(function(err,run) {
+        if(err){
+            console.log("Error" + err)
+        }
+        else{
+            res.json(run)
+        }
+    })
+})
 // R1.findOne({
 //     'Eventlist.Event': '401001 Overview_Pituitary'
 //     // ,

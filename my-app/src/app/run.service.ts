@@ -45,4 +45,9 @@ export class RunService {
     var url = this.serverURLi + "/addCelltoRun1"
     return this.http.post(url, q) // http post to localhost:4000/addCelltoRun1
   }
+  getUserID(user, pass)
+  {
+    var url = this.serverURLi + "/validUser/" + user  + "/" + pass
+    return this.http.get(url) 
+  }
 }
