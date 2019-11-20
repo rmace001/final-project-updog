@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 var Run = require('./models/run') //Schema (format) for run collection
-var User = require('./models/run')
+var User = require('./models/user')
 // var EventSchema = require('./models/run')
 // var OutcomeSchema = require('./models/run') 
 var util = require('util')
@@ -204,8 +204,6 @@ app.post("/addCelltoRun1", (req, res) =>
         res.status(400).send("failed to create new cell") //return status 400 if insert failed
     })
 })
-
-
 // R1.findOne({
 //     'Eventlist.Event': '401001 Overview_Pituitary'
 //     // ,

@@ -61,6 +61,10 @@ export class RegisterComponent implements OnInit {
     else{
       alert("Your account has been created!");
       this.isValid = true;
+      this.runService.postCelltoRun(fr,lt,us,pw).subscribe(
+        data =>{console.log(fr + " " + lt + " " + us + " " + pw)},
+        error =>{console.log("Error", error)}
+        )
       this.inputClear();
     }
     return this.isValid;
