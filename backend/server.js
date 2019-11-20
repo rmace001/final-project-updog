@@ -3,17 +3,16 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 var Run = require('./models/run') //Schema (format) for run collection
+var Runs = require('./models/runs')
 // var EventSchema = require('./models/run')
 // var OutcomeSchema = require('./models/run') 
 var util = require('util')
-var test = "run0"
 const fs = require('fs')
 const app = express()
 
 app.use(cors())
 app.use(bodyParser.json())
 
-const connection = mongoose.connection
 app.listen(4000, () => console.log("server running on port 4000")) //create server on localHost:4000
 
 const options = {
@@ -34,7 +33,9 @@ const options = {
 const uri = "mongodb+srv://sfeng023:Fsy123456789@cluster0-sl1km.mongodb.net/cs179_run_test?retryWrites=true&w=majority"
 mongoose.connect(uri, options) //connect to mongodb cs179 with my crudentials and options above
 
+var test = "run0"
 const R1 = mongoose.model(test, Run, test) // make a model for run1 with mongoose model to easily access database
+const runNames = mongoose.model("runs", Runs)
 
 //writing route will finish later
 // app.post("/addCelltoRun1", (req, res) =>
@@ -49,10 +50,12 @@ const R1 = mongoose.model(test, Run, test) // make a model for run1 with mongoos
 //         res.status(400).send("failed to create new cell") //return status 400 if insert failed
 //     })
 // })
-app.get("/listFromRun", (req, res) =>
+app.get("/listFromRun/:r", (req, res) =>
 {
+    var runName = req.params.r
+    const R2 = mongoose.model(runName, Run, runName)
     //http post can be retrieved from localhost:4000/listFromRun1
-    R1.find({}).select("Year Block Eventlist.Event Eventlist.Event_Outcome.OutcomeTopic Eventlist.Event_Outcome.Score")
+    R2.find({}).select("Year Block Eventlist.Event Eventlist.Event_Outcome.OutcomeTopic Eventlist.Event_Outcome.Score")
     .lean().exec(function(err, run) {
         if(err)
         {
@@ -109,9 +112,9 @@ app.get("/listEvents", (req, res) =>
         }
     })
 })
-app.get("/listEventswithSpecifics", (req, res) => {
-    b = req.body.block
-    y = req.body.year
+app.get("/listEventswithSpecifics/:y/:b", (req, res) => { //not working
+    b = req.params.b
+    y = req.params.y
     R1.findOne({Block: b, Year: y}).select("Eventlist.Event")
     .lean().exec(function(err, run) {
         if(err)
@@ -124,10 +127,10 @@ app.get("/listEventswithSpecifics", (req, res) => {
         }
     })
 })
-app.get("/listRunWithSpecifics", (req, res) => {
-    b = req.body.block
-    y = req.body.year
-    R1.findOne({Block: b, Year: y}).select("")
+app.get("/listRunWithSpecifics/:y/:b", (req, res) => { //not working
+    b = req.params.b
+    y = req.params.y
+    R1.findOne({Block: b, Year: y})
     .lean().exec(function(err, run) {
         if(err)
         {
@@ -138,6 +141,18 @@ app.get("/listRunWithSpecifics", (req, res) => {
             res.json(run) //return json of the result to perosn who requested it
         }
     })
+})
+app.get("/listCollections", (req, res) => {
+    runNames.find().select("runName").lean().exec(function(err, run) {
+        if(err)
+        {
+            console.log("could not proccess " + err)
+        }
+        else
+        {
+            res.json(run) //return json of the result to perosn who requested it
+        }
+      })
 })
 app.get("/listScorewithEventAndOutcome/:e/:o", (req, res) => {
     eName = req.params.e
@@ -235,3 +250,29 @@ app.get("/listScorewithEventAndOutcome/:e/:o", (req, res) => {
 //         console.log(holder)
 //     }
 // })
+
+// R1.findOne({Year: 0, Block: 4})
+//     .select("Year Block Eventlist.Event Eventlist.Event_Outcome.OutcomeTopic Eventlist.Event_Outcome.Score")
+//     .lean().exec(function(err, run) {
+//     if(err)
+//     {
+//         console.log("could not proccess " + err)
+//     }
+//     else
+//     {
+//         // fs.writeFile('shiyao.txt', util.inspect(run, false, null), (err)=>
+//         // {
+//         //     if (err) throw err;
+//         //     console.log("saved for shiyao")
+//         // })
+//         console.log(util.inspect(run, false, null))
+//     }
+//     })
+// mongoose.connection.on('connected', function (ref) {
+//     console.log('Connected to mongo server.');
+//     //trying to get collection names
+//     mongoose.connection.db.listCollections().toArray(function (err, names) {
+//         console.log(names); // [{ name: 'dbname.myCollection' }]
+//     });
+// })
+
