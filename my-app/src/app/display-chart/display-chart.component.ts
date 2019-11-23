@@ -16,15 +16,16 @@ import { chart } from 'highcharts/highcharts.src';
   styleUrls: ['./display-chart.component.scss']
 })
 export class DisplayChartComponent implements OnInit {
-
+  runchoice
+  outcomed
   DataSource1
-    OutcomeList
-    EventNameList
-    ScoreList
-    alllist
-    chart
-    constructor(private runService: RunService, private router: Router) { }
-    r: Run[] // class has element r of type array of Runs
+  OutcomeList
+  EventNameList
+  ScoreList
+  alllist
+  chart
+  constructor(private runService: RunService, private router: Router) { }
+  r: Run[] // class has element r of type array of Runs
   getData(){ // returns list of objects i.e. the datalist for my chart
   
     var datalist = [];
@@ -43,7 +44,10 @@ export class DisplayChartComponent implements OnInit {
     }
     return datalist;
   }
-  
+  selectChangeHandler (runchoice) {
+    //update the ui
+    console.log("pick up")
+  }
 
   ngOnInit() {
    
@@ -53,13 +57,16 @@ export class DisplayChartComponent implements OnInit {
     
       this.DataSource1 = new MatTableDataSource(val.Eventlist);
       var input_listOutcomes = []
+      var list_o = []
       for(var i = 0; i< this.DataSource1.data[0].Event_Outcome.length;i++){
         // console.log(this.DataSource1.data[0].Event_Outcome[i].OutcomeTopic)
         var inputs = String(this.DataSource1.data[0].Event_Outcome[i].OutcomeTopic)
         input_listOutcomes.push(inputs)
-        
+        list_o[i] = {id:i, name:inputs}
       }
+      this.outcomed = list_o
       this.OutcomeList = input_listOutcomes
+      console.log(this.OutcomeList)
        this.runService.showEventNames().subscribe((val: Run[]) => //send http request and results are subscribed into val
     {
      
@@ -103,7 +110,7 @@ export class DisplayChartComponent implements OnInit {
       var dps = []; // dataPoints
       for (var j = 0; j < this.OutcomeList.length; j++) {	
                   dps.push({
-                    y: this.ScoreList[0][1][j],
+                    y: this.ScoreList[0][1][j], // 0 is for row, 1 just display list
                     label: this.OutcomeList[j]
                   });
                             
@@ -124,8 +131,8 @@ export class DisplayChartComponent implements OnInit {
                     dataPoints: dps
                   }]
                 });
-                chart1.render();          
-    //   console.log(this.ScoreList)
+        chart1.render();          
+  
       // this.alllist = this.ScoreList
       let chart2 = new CanvasJS.Chart("chartContainer2", {
                   animationEnabled: true,
@@ -139,7 +146,7 @@ export class DisplayChartComponent implements OnInit {
                     legendMarkerType: "triangle",
                     legendMarkerColor: "green",
                     color: "rgba(255,12,32,.3)",
-                    showInLegend: true,
+                    showInLegend: false,
                     legendText: "Score of Run",
                     dataPoints : dps
         

@@ -78,18 +78,15 @@
 </div>
 
 <div class="wrapper3" *ngIf="this.list_a ?true:false" >
-        <mat-form-field>
-            <mat-label>Select a Run</mat-label>
-            <mat-select disableRipple>
-                    <mat-option value="1">{{this.list_a[0]}}</mat-option>
-                    <mat-option value="2">{{this.list_a[1]}}</mat-option>
-                    <mat-option value="3">Run 3</mat-option>
-                <!-- <mat-option value="1">Run 1</mat-option>
-                <mat-option value="2">Run 2</mat-option>
-                <mat-option value="3">Run 3</mat-option> -->
-            </mat-select>
-        </mat-form-field>
-    </div>
+    <mat-form-field>
+        <mat-label>Select a Run</mat-label>
+        <mat-select disableRipple  [(ngModel)]="runchoice"> 
+                <mat-option *ngFor="let item of model"  [value]="item.id">{{item.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+This is run->{{runchoice}}
+
 
 
 <div class="wrapper"  *ngIf="radioChoice == 1?true:false">
