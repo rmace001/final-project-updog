@@ -18,7 +18,7 @@ import {BloopComponent} from '../bloop/bloop.component';
 })
 export class DisplayChartComponent implements OnInit {
   @ViewChild(BloopComponent, {static:true}) bloop_c;
-  runchoiceNamme = ""
+  runchoiceName: string = ""
   outcomed
   DataSource1
   OutcomeList
@@ -52,8 +52,9 @@ export class DisplayChartComponent implements OnInit {
   }
 
   ngOnInit() {
-   console.log("Start here ", this.runService.runName)
-   this.runService.showOutcomeTopics().subscribe((val: OutcomeList) => //send http request and results are subscribed into val
+  //  console.log("Start here ", this.runService.runName)
+   this.runchoiceName = this.runService.runName
+   this.runService.showOutcomeTopics(this.runchoiceName).subscribe((val: OutcomeList) => //send http request and results are subscribed into val
     {
       
     
@@ -69,7 +70,7 @@ export class DisplayChartComponent implements OnInit {
       this.outcomed = list_o
       this.OutcomeList = input_listOutcomes
       console.log(this.OutcomeList)
-       this.runService.showEventNames().subscribe((val: Run[]) => //send http request and results are subscribed into val
+       this.runService.showEventNames(this.runchoiceName).subscribe((val: Run[]) => //send http request and results are subscribed into val
     {
      
       var input_list_EventNames = []
@@ -82,7 +83,7 @@ export class DisplayChartComponent implements OnInit {
         }
       }
       this.EventNameList = input_list_EventNames
-      this.runService.showScores().subscribe((val: Run[]) => //send http request and results are subscribed into val
+      this.runService.showScores(this.runchoiceName).subscribe((val: Run[]) => //send http request and results are subscribed into val
     {
       
       // console.log("hello from showAllScores")

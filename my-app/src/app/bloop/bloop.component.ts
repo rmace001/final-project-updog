@@ -30,6 +30,7 @@ export class BloopComponent implements OnInit {
     
   }
   open(event){
+    // this function changes the runService runName so it can be shared everywhere runservice is injected now
     this.runService.runName = this.runchoice
   }
   ngOnInit() {
