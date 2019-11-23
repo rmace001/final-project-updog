@@ -13,24 +13,24 @@ export class RunService {
     var url = this.serverURLi + "/listFromRun/" + run
     return this.http.get(url) // http get from localhost:4000/listFromRun1
   }
-  showScores()
+  showScores(run: string)
   {
-    var url = this.serverURLi + "/listScoresAndEventName"
+    var url = this.serverURLi + "/listScoresAndEventName/" + run
     return this.http.get(url) // http get from localhost:4000/listFromRun1
   }
-  showOutcomeTopics()
+  showOutcomeTopics(run: string)
   {
-    var url = this.serverURLi + "/listOutcomes"
+    var url = this.serverURLi + "/listOutcomes/" + run
     return this.http.get(url) // http get from localhost:4000/listFromRun1
   }
-  showEventNames()
+  showEventNames(run: string)
   {
-    var url = this.serverURLi + "/listEvents"
+    var url = this.serverURLi + "/listEvents/" + run
     return this.http.get(url) // http get from localhost:4000/listFromRun1
   }
-  showScoreWithNames(e, o)
+  showScoreWithNames(r, e, o)
   {
-    var url = this.serverURLi + "/listScorewithEventAndOutcome/" + e  + "/" + o
+    var url = this.serverURLi + "/listScorewithEventAndOutcome/" + r + "/" + e  + "/" + o
     return this.http.get(url) 
   }
   listCollections()
@@ -38,14 +38,14 @@ export class RunService {
     var url = this.serverURLi + "/listCollections"
     return this.http.get(url)
   }
-  showEventswithSpecs(y, b)
+  showEventswithSpecs(r, y, b)
   {
-    var url = this.serverURLi + "/listEventswithSpecifics/" + y  + "/" + b
+    var url = this.serverURLi + "/listEventswithSpecifics/" + r + "/" + y  + "/" + b
     return this.http.get(url) 
   }
-  showRunwithSpecs(y,b)
+  showRunwithSpecs(r,y,b)
   {
-    var url = this.serverURLi + "/listRunWithSpecifics/" + y  + "/" + b
+    var url = this.serverURLi + "/listRunWithSpecifics/" + r + "/" + y  + "/" + b
     return this.http.get(url) 
   }
 

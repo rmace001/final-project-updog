@@ -33,8 +33,8 @@ const options = {
 const uri = "mongodb+srv://sfeng023:Fsy123456789@cluster0-sl1km.mongodb.net/cs179_run_test?retryWrites=true&w=majority"
 mongoose.connect(uri, options) //connect to mongodb cs179 with my crudentials and options above
 
-var test = "run0"
-const R1 = mongoose.model(test, Run, test) // make a model for run1 with mongoose model to easily access database
+// var test = "run0"
+// const R1 = mongoose.model(test, Run, test) // make a model for run1 with mongoose model to easily access database
 const runNames = mongoose.model("runs", Runs)
 
 //writing route will finish later
@@ -68,10 +68,12 @@ app.get("/listFromRun/:r", (req, res) =>
         }
       })
 })
-app.get("/listScoresAndEventName", (req, res) =>
+app.get("/listScoresAndEventName/:r", (req, res) =>
 {
+    var runName = req.params.r
+    const R2 = mongoose.model(runName, Run, runName)
     //http post can be retrieved from localhost:4000/listFromRun1
-    R1.find({}).select("Eventlist.Event Eventlist.Event_Outcome.Score")
+    R2.find({}).select("Eventlist.Event Eventlist.Event_Outcome.Score")
     .lean().exec(function(err, run) {
         if(err)
         {
@@ -83,10 +85,12 @@ app.get("/listScoresAndEventName", (req, res) =>
         }
       })
 })
-app.get("/listOutcomes", (req, res) =>
+app.get("/listOutcomes/:r", (req, res) =>
 {
+    var runName = req.params.r
+    const R2 = mongoose.model(runName, Run, runName)
     //http post can be retrieved from localhost:4000/listFromRun1
-    R1.findOne({Year: 0}, {"Eventlist": {$slice: 1}})
+    R2.findOne({Year: 0}, {"Eventlist": {$slice: 1}})
     .select("Eventlist.Event_Outcome.OutcomeTopic").lean().exec(function(err, run) {
         if(err)
         {
@@ -98,10 +102,12 @@ app.get("/listOutcomes", (req, res) =>
         }
     })
 })
-app.get("/listEvents", (req, res) =>
+app.get("/listEvents/:r", (req, res) =>
 {
+    var runName = req.params.r
+    const R2 = mongoose.model(runName, Run, runName)
     //http post can be retrieved from localhost:4000/listFromRun1
-    R1.find().select("Eventlist.Event")
+    R2.find().select("Eventlist.Event")
     .lean().exec(function(err, run) {
         if(err)
         {
@@ -113,10 +119,12 @@ app.get("/listEvents", (req, res) =>
         }
     })
 })
-app.get("/listEventswithSpecifics/:y/:b", (req, res) => { //not working
+app.get("/listEventswithSpecifics/:r/:y/:b", (req, res) => { //not working
     b = req.params.b
     y = req.params.y
-    R1.findOne({Block: b, Year: y}).select("Eventlist.Event")
+    var runName = req.params.r
+    const R2 = mongoose.model(runName, Run, runName)
+    R2.findOne({Block: b, Year: y}).select("Eventlist.Event")
     .lean().exec(function(err, run) {
         if(err)
         {
@@ -128,10 +136,12 @@ app.get("/listEventswithSpecifics/:y/:b", (req, res) => { //not working
         }
     })
 })
-app.get("/listRunWithSpecifics/:y/:b", (req, res) => { //not working
+app.get("/listRunWithSpecifics/:r/:y/:b", (req, res) => { //not working
     b = req.params.b
     y = req.params.y
-    R1.findOne({Block: b, Year: y})
+    var runName = req.params.r
+    const R2 = mongoose.model(runName, Run, runName)
+    R2.findOne({Block: b, Year: y})
     .lean().exec(function(err, run) {
         if(err)
         {
@@ -155,10 +165,12 @@ app.get("/listCollections", (req, res) => {
         }
       })
 })
-app.get("/listScorewithEventAndOutcome/:e/:o", (req, res) => {
+app.get("/listScorewithEventAndOutcome/:r/:e/:o", (req, res) => {
     eName = req.params.e
     oName = req.params.o
-    R1.findOne({
+    var runName = req.params.r
+    const R2 = mongoose.model(runName, Run, runName)
+    R2.findOne({
         'Eventlist.Event': eName
         // ,
         // 'Eventlist.Event_Outcome.OutcomeTopic': "GP Biochemistry and molecular biology"

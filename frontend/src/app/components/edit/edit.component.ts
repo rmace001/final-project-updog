@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RunService } from '../../run.service'
 
 @Component({
   selector: 'app-edit',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private runService: RunService) { }
   ngOnInit() {
+    console.log(this.runService.passVariable)
+    this.runService.passVariable = ""
   }
 
 }
