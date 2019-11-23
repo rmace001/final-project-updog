@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
-import { RunService } from '../run.service'
+import { UserService } from '../user.service'
 import { Run } from '../run.model'
 import { Router } from '@angular/router'
 
@@ -12,7 +12,7 @@ import { Router } from '@angular/router'
 
 export class RegisterComponent implements OnInit {
   isValid: boolean;
-  constructor(private runService: RunService, private router: Router,public app: AppComponent) { }
+  constructor(private userService: UserService, private router: Router,public app: AppComponent) { }
   r: Run[]
 
   ngOnInit() {
@@ -61,7 +61,7 @@ export class RegisterComponent implements OnInit {
     else{
       alert("Your account has been created!");
       this.isValid = true;
-      this.runService.postCelltoRun(fr,lt,us,pw).subscribe(
+      this.userService.postCelltoRun(fr,lt,us,pw).subscribe(
         data =>{console.log(fr + " " + lt + " " + us + " " + pw)},
         error =>{console.log("Error", error)}
         )

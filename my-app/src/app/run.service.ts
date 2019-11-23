@@ -33,21 +33,4 @@ export class RunService {
     var url = this.serverURLi + "/listScorewithEventAndOutcome/" + e  + "/" + o
     return this.http.get(url) 
   }
-  postCelltoRun(f:String, l:String, u:String, p:String)
-  {
-    const q = {
-      Firstname: f,
-      Lastname: l,
-      Username: u,
-      Password: p
-    }
-    console.log("adding person")
-    var url = this.serverURLi + "/addCelltoRun1"
-    return this.http.post(url, q) // http post to localhost:4000/addCelltoRun1
-  }
-  getUserID(user, pass)
-  {
-    var url = this.serverURLi + "/validUser/" + user  + "/" + pass
-    return this.http.get(url) 
-  }
 }

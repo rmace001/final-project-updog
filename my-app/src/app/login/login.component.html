@@ -12,7 +12,13 @@
         <input type="text" name="" placeholder="Enter Username" id="loginUser">
         <p>Password</p>
         <input type="password" name="" placeholder="Enter Password" id="loginPassword">
-        <input type="submit" name="" value="Login" (click)="checker()">
+        <div align="center">
+          <button id="loggingin" (click)="loginValid()">Login</button>
+          <div *ngIf="loginValid()">
+            <a href="#" routerLink="/home">continue</a>
+          </div>
+          <br>
+        </div><br>
         <a href="#" routerLink="/register">Register/Sign-up</a><br>
         <!-- <a href="#" routerLink="/home" id="loginGuest">Sign in as Guest</a><br> -->
       </form>

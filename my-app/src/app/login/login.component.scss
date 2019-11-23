@@ -57,17 +57,18 @@ h1{
     color: #fff;
     font-size: 16px;
 }
-.loginbox input[type="submit"]
+.loginbox button[id="loggingin"]
 {
     border: none;
     outline: none;
-    height: 40px;
+    height: 45px;
+    width: 260px;
     background: #099e10;
     color: #fff;
     font-size: 18px;
-    border-radius: 20px;
+    border-radius: 25px;
 }
-.loginbox input[type="submit"]:hover
+.loginbox button[id="loggingin"]:hover
 {
     cursor: pointer;
     background: #ffc107;
