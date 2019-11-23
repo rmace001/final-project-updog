@@ -1,22 +1,24 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit,OnDestroy} from '@angular/core';
 import { MapChart, Chart } from 'angular-highcharts';
 
 
 import { RunService } from '../run.service' 
 import { Run, OutcomeList} from '../run.model'
 import { MatTableModule } from '@angular/material/table';
-import { Router } from '@angular/router'
+import { Router, ChildActivationEnd } from '@angular/router'
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import * as CanvasJS from '../../assets/canvasjs.min.js';
 import { MatSort, MatSortable, MatPaginator, MatTableDataSource } from '@angular/material';
 import { chart } from 'highcharts/highcharts.src';
+import {BloopComponent} from '../bloop/bloop.component';
 @Component({
   selector: 'app-display-chart',
   templateUrl: './display-chart.component.html',
   styleUrls: ['./display-chart.component.scss']
 })
 export class DisplayChartComponent implements OnInit {
-  runchoice
+  @ViewChild(BloopComponent, {static:true}) bloop_c;
+  runchoiceNamme = ""
   outcomed
   DataSource1
   OutcomeList
@@ -50,7 +52,7 @@ export class DisplayChartComponent implements OnInit {
   }
 
   ngOnInit() {
-   
+   console.log("Start here ", this.runService.runName)
    this.runService.showOutcomeTopics().subscribe((val: OutcomeList) => //send http request and results are subscribed into val
     {
       
@@ -160,6 +162,7 @@ export class DisplayChartComponent implements OnInit {
       
     })
   }
-  
+
 
 }
+

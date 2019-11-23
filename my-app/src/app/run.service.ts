@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class RunService {
-
+  runName = ""
   serverURLi = "http://localhost:4000" // this is the server the backend is running from 
   constructor(private http: HttpClient) {}
   showRuns(run: string)

@@ -81,7 +81,7 @@
     <mat-form-field>
         <mat-label>Select a Run</mat-label>
         <mat-select disableRipple  [(ngModel)]="runchoice"> 
-                <mat-option *ngFor="let item of model"  [value]="item.id">{{item.name}}</mat-option>
+                <mat-option *ngFor="let item of model"  [value]="item.name" >{{item.name}}</mat-option>
         </mat-select>
     </mat-form-field>
 </div>
@@ -90,8 +90,8 @@ This is run->{{runchoice}}
 
 
 <div class="wrapper"  *ngIf="radioChoice == 1?true:false">
-    <button mat-raised-button class = "map_btnn" routerLink="/heatmap">Map It</button>
+    <button mat-raised-button class = "map_btnn" (click)="open($event)" routerLink="/heatmap" >Map It</button>
 </div>
 <div class="wrapper"  *ngIf="radioChoice == 2?true:false">
-    <button mat-raised-button class = "map_btnn" routerLink="/display-chart">Map It</button>
+    <button mat-raised-button class = "map_btnn" (click)="open($event)" routerLink="/display-chart">Map It</button>
 </div>

@@ -3,6 +3,7 @@ import { RunService } from '../run.service'
 import { Run, RunName} from '../run.model'
 import { Router } from '@angular/router'
 
+
 @Component({
   selector: 'app-bloop',
   templateUrl: './bloop.component.html',
@@ -11,10 +12,11 @@ import { Router } from '@angular/router'
 
 export class BloopComponent implements OnInit {
 
-  constructor(private runService: RunService, private router: Router) { }
+  constructor(private runService: RunService,private router: Router) { }
+
   r: RunName[] // class has element r of type array of Runs
   list_a = []
-  runchoice
+  runchoice = "" // share this runchoice for different component 
   model:any
   
   showAllCollections(){  //Placeholder, supposed to implement using listCollections
@@ -27,11 +29,13 @@ export class BloopComponent implements OnInit {
     this.model = this.list_a
     
   }
-
+  open(event){
+    this.runService.runName = this.runchoice
+  }
   ngOnInit() {
+    
     this.showAllCollections()
     
-   
   }
   
 
