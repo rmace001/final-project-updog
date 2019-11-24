@@ -34,7 +34,7 @@ export class BloopComponent implements OnInit {
     this.runService.runName = this.runchoice
   }
   ngOnInit() {
-    
+
     this.showAllCollections()
     
   }

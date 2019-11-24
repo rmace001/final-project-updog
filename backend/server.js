@@ -90,7 +90,7 @@ app.get("/listOutcomes/:r", (req, res) =>
     var runName = req.params.r
     const R2 = mongoose.model(runName, Run, runName)
     //http post can be retrieved from localhost:4000/listFromRun1
-    R2.findOne({Year: 0}, {"Eventlist": {$slice: 1}})
+    R2.findOne({}, {"Eventlist": {$slice: 1}})
     .select("Eventlist.Event_Outcome.OutcomeTopic").lean().exec(function(err, run) {
         if(err)
         {
