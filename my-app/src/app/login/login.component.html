@@ -14,7 +14,7 @@
         <input type="password" name="" placeholder="Enter Password" id="loginPassword">
         <div align="center">
           <button id="loggingin" (click)="loginValid()">Login</button>
-          <div *ngIf="loginValid()">
+          <div *ngIf="checker">
             <a href="#" routerLink="/home">continue</a>
           </div>
           <br>

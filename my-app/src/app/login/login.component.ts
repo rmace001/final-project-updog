@@ -15,8 +15,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private userService: UserService, private router: Router,public app: AppComponent) { }
   id: String
-  temp: boolean
-  checker= []
+  checker: boolean = false;
   ngOnInit() {
     this.app.hide();
     //this.loginValid();
@@ -27,15 +26,23 @@ export class LoginComponent implements OnInit {
     console.log("HELLO FROM LOGIN")
     var u:string = (<HTMLInputElement>document.getElementById("loginUser")).value;
     var p:string = (<HTMLInputElement>document.getElementById("loginPassword")).value;
-    this.userService.getUserID(u,p).subscribe((val: User)=>
-    {
-      this.id = val._id
-      if(this.id != null){
-        this.checker[0] = true
-      }
-      else{
-        this.checker[0]= false
-      }
-    });
+    this.userService.getUserPassVeri(u,p).then(
+      ()=>{
+        if(this.userService.validLog){
+          this.checker = true;
+          console.log("valid")
+        }
+        else{
+          this.checker = false;
+          alert("Invald username or password");
+          console.log("not user")
+        }
+      },
+      // ()=>
+      // {
+      //   alert("Error code: 423535");
+      //   console.log("we're fucked idk how to fix")
+      // }
+    )
   }
 }

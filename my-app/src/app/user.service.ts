@@ -1,50 +1,43 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ReflectiveInjector } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import 'rxjs/add/operator/toPromise';
+//import {toPromise} from 'rxjs';
 import {Http, Headers, Response} from '@angular/http';
-
-class SearchItem {
-    constructor(
-        public userid: string,
-        public userFirst: string,
-        public userLast: string,
-        public userName: string,
-        public userPass: string 
-    ) {}
-}
+import {User} from './user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-    results: SearchItem[];
-    loading: boolean;
+    id: String;
+    firstname: String;
+    lastname: String;
+    validLog: boolean;
 
     serverURLi = "http://localhost:4000" // this is the server the backend is running from 
     constructor(private http: HttpClient) {
-        this.results = [];
-        this.loading = false;
     }
 
-    search(term: string){
-        let promise = new Promise((resolve, reject) => {
-            let ourURL = `${this.serverURLi}?term=${term}`;
-            this.http.get(ourURL).toPromise().then(res => {
-                this.results = res.results.map(item =>{
-                    return new SearchItem(
-                        item.id,
-                        item.fname,
-                        item.lname,
-                        item.user,
-                        item.pass
-                    );
-                });
+    getUserPassVeri(user:string, pass:string){
+        var url = this.serverURLi +"/validUser/" + user + "/" + pass
+        let promise = new Promise((resolve, reject) =>{
+            this.http.get(url).toPromise()
+            .then((res:User) =>{
+                if(res == null){
+                    this.validLog = false;
+                }
+                else{
+                    this.firstname = res.Firstname;
+                    this.lastname = res.Lastname;
+                    this.id = res._id;
+                    this.validLog = true;
+                }
                 resolve();
             },
-            msg => {
-                reject(msg);
-            });
-        });
+                mes => {
+                    reject(mes);
+                }
+            )
+        })
         return promise;
     }
 
