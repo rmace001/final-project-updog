@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapChart, Chart } from 'angular-highcharts';
 import { AppComponent } from '../app.component';
 
-
+import * as Highcharts from 'highcharts';
 import { RunService } from '../run.service' 
 import { Run, OutcomeList} from '../run.model'
 import { MatTableModule } from '@angular/material/table';
@@ -22,15 +22,117 @@ import { chart } from 'highcharts/highcharts.src';
   templateUrl: './heatmap.component.html',
   styleUrls: ['./heatmap.component.scss']
 })
-export class HeatmapComponent{
+export class HeatmapComponent implements OnInit {
     DataSource1
     OutcomeList
     EventNameList
     ScoreList
     alllist
-    chart
-    showSpinner: boolean = false;
-    constructor(private runService: RunService, private router: Router, public app: AppComponent) { }
+    runName: string = ""
+    public chart: any;
+    public dynamic_data: any; 
+    public options: any = {
+        chart: {
+            type: 'heatmap',
+            zoomType: 'xy',
+            height: 1700,
+            width: 1200,
+            margin: [80, 5, 400, 230],
+            spacing: [10, 10, 100, 10]
+          },
+          title: {
+              text: 'Highcharts heat map',
+              align: 'left',
+              x: 60
+          },
+      
+          subtitle: {
+              text: 'Curriculum Mapping using Mapradish',
+              align: 'left',
+              x: 60
+          },
+          credits: {
+            enabled: false
+          },
+          xAxis: {
+              title: {
+                  text: 'Outcomes',
+                  reserveSpace: true
+              },
+            //   categories: this.OutcomeList,
+            // make sure to update xAxis categories to this.OutcomeList
+              categories: ['Outcome 1'],
+              allowDecimals: false,
+              labels: {
+                  // reserveSpace: true
+              },
+              scrollbar: {
+                enabled: true
+            }
+              
+          },
+          yAxis: {
+              title: {
+                  text: 'Events'
+              },
+            //   categories: this.EventNameList,
+              // be sure to update the yAxis categories in the update funciton
+              categories: ['this.EventNameList'],
+              scrollbar: {
+                enabled: true
+            }
+            //   tickLength: 100
+              
+          },
+          legend:{
+              align: 'center',
+              verticalAlign: 'top',
+              floating: true        
+         },
+          colorAxis: {
+              stops: [
+                  [0, '#3060cf'],
+                  [0.5, '#fffbbc'],
+                  [0.9, '#c4463a'],
+                  [1, '#c4463a']
+              ],
+              // layout: 'vertical',
+              min: 0,
+              max: 1,
+              startOnTick: false,
+              endOnTick: false,
+              labels: {
+                  format: '{value}'
+              },
+          },
+          plotOptions: {
+              series: {
+                  
+              },
+              heatmap: {
+                  rowsize: 1
+              }
+          },
+          series: [
+            {
+              type: undefined,
+              name: 'Curriculum Mapping',
+              turboThreshold: 60000,
+            //   data: this.getData(),
+              // be sure to update the series data in the update function
+              data: this.getData2(),
+              boostThreshold: 60000,
+              borderWidth: 0,
+              nullColor: '#EFEFEF',
+              tooltip: {
+                  // headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
+                  pointFormat: '{point.custom.event} {point.custom.outcome} <b>{point.value}</b>'
+              }
+              
+            }
+          ]
+    };
+    constructor(private runService: RunService, private router: Router,  public app: AppComponent) { }
     r: Run[] // class has element r of type array of Runs
     // @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
     // @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -46,6 +148,7 @@ export class HeatmapComponent{
     // this.showAllScores()
     // this.showAllEventNames()
     var datalist = [];
+    
     // console.log("hi")
     // console.log(this.EventNameList.length)
     // console.log(this.OutcomeList.length)
@@ -55,13 +158,14 @@ export class HeatmapComponent{
     // console.log(this.ScoreList[0][0])
     // console.log(this.ScoreList[0][1])
     for (var i = 0; i < this.EventNameList.length; i++){ // row
+    // for (var i = 0; i < 100; i++){ // row
       var eventNames = this.ScoreList[i][0]
         for (var j = 0; j < this.OutcomeList.length; j++){ // order or cell in row
             datalist.push({
                             // x: this.EventNameList[j],
                             x: j,
                             // y: this.OutcomeList[i],
-                            y:i,
+                            y: i,
                             value: this.ScoreList[i][1][j],
                             name: 'The Cell',
                             // event: 'The Cell',
@@ -72,99 +176,117 @@ export class HeatmapComponent{
     }
     return datalist;
   }
-  displayColumns = ['block', 'year', 'event', 'outcome topic', 'score'] // needed for UI table..?
-  showAllRuns(){
-    this.runService.showRuns().subscribe((val: Run[]) => //send http request and results are subscribed into val
-    {
-      console.log("hello from console")
-      //this.r = val; //send the results the element r 
-      console.log(val)
-    })
-  }
-  showAllOutcomes(){
-    this.runService.showOutcomeTopics().subscribe((val: OutcomeList) => //send http request and results are subscribed into val
-    {
+  
+  //getData2 is for getting initial dummy data to display while subscribe function is running
+  getData2(){ // returns list of dummy objects
+    var datalist = [];
+    for (var i = 0; i < 500; i++){ // row
+        for (var j = 0; j < 45; j++){ // order or cell in row
+            datalist.push({
+                            x: j,
+                            y:i,
+                            value: Math.random(),
+                            name: 'The Cell',
+                            custom: {event: 'eventNames', outcome: 'this.OutcomeList[j]'}
+                        });
+        }
+    }
+    return datalist;
+  } // end getData2()
+  
+  // showAllRuns(){
+  //   this.runService.showRuns('run1').subscribe((val: Run[]) => //send http request and results are subscribed into val
+  //   {
+  //     console.log("hello from console")
+  //     //this.r = val; //send the results the element r 
+  //     console.log(val)
+  //   })
+  // }
+  // showAllOutcomes(){
+  //   this.runService.showOutcomeTopics().subscribe((val: OutcomeList) => //send http request and results are subscribed into val
+  //   {
       
-    //   console.log("hello from console")
-      //this.r = val; //send the results the element r 
-      this.DataSource1 = new MatTableDataSource(val.Eventlist);
-    //   this.DataSource1.data.paginator = this.paginator;
-    //   this.DataSource1.data.sort = this.sort;
-    //   console.log(this.DataSource1.data[0].Event_Outcome)// it will get the list of eventOutcome
-      var input_listOutcomes = []
-      for(var i = 0; i< this.DataSource1.data[0].Event_Outcome.length;i++){
-        // console.log(this.DataSource1.data[0].Event_Outcome[i].OutcomeTopic)
-        var inputs = String(this.DataSource1.data[0].Event_Outcome[i].OutcomeTopic)
-        input_listOutcomes.push(inputs)
+  //   //   console.log("hello from console")
+  //     //this.r = val; //send the results the element r 
+  //     this.DataSource1 = new MatTableDataSource(val.Eventlist);
+  //   //   this.DataSource1.data.paginator = this.paginator;
+  //   //   this.DataSource1.data.sort = this.sort;
+  //   //   console.log(this.DataSource1.data[0].Event_Outcome)// it will get the list of eventOutcome
+  //     var input_listOutcomes = []
+  //     for(var i = 0; i< this.DataSource1.data[0].Event_Outcome.length;i++){
+  //       // console.log(this.DataSource1.data[0].Event_Outcome[i].OutcomeTopic)
+  //       var inputs = String(this.DataSource1.data[0].Event_Outcome[i].OutcomeTopic)
+  //       input_listOutcomes.push(inputs)
         
-      }
-      this.OutcomeList = input_listOutcomes
-    //   console.log("hello from showAllOutcomes")
-    //   console.log(this.OutcomeList)
+  //     }
+  //     this.OutcomeList = input_listOutcomes
+  //   //   console.log("hello from showAllOutcomes")
+  //   //   console.log(this.OutcomeList)
       
-    })
-  }
-  showAllScores(){
-    this.runService.showScores().subscribe((val: Run[]) => //send http request and results are subscribed into val
-    {
+  //   })
+  // }
+  // showAllScores(){
+  //   this.runService.showScores().subscribe((val: Run[]) => //send http request and results are subscribed into val
+  //   {
       
-      console.log("hello from showAllScores")
-      // console.log(this.OutcomeList)
-      //this.r = val; //send the results the element r 
-      // console.log(val)
-      // console.log(val[0].Eventlist[0]) //for each row 
-      var input_list_score = []
-      for(var i = 0 ; i < val.length; i++){ // for same block and year
-        for(var j = 0; j < val[i].Eventlist.length; j++){
-          var inputs =  val[i].Eventlist[j]
-          input_list_score.push(inputs) 
-        }
-      }
-      this.ScoreList = input_list_score
-      var final_row_Event_cell_list = {}
-      for(var row = 0; row < input_list_score.length; row++){
-        var insidelist = []
-        for (var index =0; index < input_list_score[row].Event_Outcome.length;index++ ){
-          // console.log(this.ScoreList[row].Event_Outcome[index].Score)
-          insidelist.push((input_list_score[row].Event_Outcome[index].Score))
-        }
-        // console.log(insidelist)
-        final_row_Event_cell_list[row] = [input_list_score[row].Event,insidelist]
-      }
-      this.ScoreList = final_row_Event_cell_list
-    //   console.log(this.ScoreList)
-      this.alllist = this.ScoreList
+  //     console.log("hello from showAllScores")
+  //     // console.log(this.OutcomeList)
+  //     //this.r = val; //send the results the element r 
+  //     // console.log(val)
+  //     // console.log(val[0].Eventlist[0]) //for each row 
+  //     var input_list_score = []
+  //     for(var i = 0 ; i < val.length; i++){ // for same block and year
+  //       for(var j = 0; j < val[i].Eventlist.length; j++){
+  //         var inputs =  val[i].Eventlist[j]
+  //         input_list_score.push(inputs) 
+  //       }
+  //     }
+  //     this.ScoreList = input_list_score
+  //     var final_row_Event_cell_list = {}
+  //     for(var row = 0; row < input_list_score.length; row++){
+  //       var insidelist = []
+  //       for (var index =0; index < input_list_score[row].Event_Outcome.length;index++ ){
+  //         // console.log(this.ScoreList[row].Event_Outcome[index].Score)
+  //         insidelist.push((input_list_score[row].Event_Outcome[index].Score))
+  //       }
+  //       // console.log(insidelist)
+  //       final_row_Event_cell_list[row] = [input_list_score[row].Event,insidelist]
+  //     }
+  //     this.ScoreList = final_row_Event_cell_list
+  //   //   console.log(this.ScoreList)
+  //     this.alllist = this.ScoreList
       
-    })
-  }
-  showAllEventNames(){
-    this.runService.showEventNames().subscribe((val: Run[]) => //send http request and results are subscribed into val
-    {
-      // console.log("hello from showAllEventNames")
-      //this.r = val; //send the results the element r 
+  //   })
+  // }
+  // showAllEventNames(){
+  //   this.runService.showEventNames().subscribe((val: Run[]) => //send http request and results are subscribed into val
+  //   {
+  //     // console.log("hello from showAllEventNames")
+  //     //this.r = val; //send the results the element r 
       
-      var input_list_EventNames = []
-      for (var i = 0; i< val.length;i++){
-        // console.log(val[i])
-        for(var j = 0; j< val[i].Eventlist.length;j++){
-          //console.log(val[i].Eventlist[j])
-          var inputS = String(val[i].Eventlist[j].Event)
-          input_list_EventNames.push(inputS)
-        }
-      }
-      this.EventNameList = input_list_EventNames
-    //   console.log("hello from showAllEventNames")
-    //   console.log(this.EventNameList)
+  //     var input_list_EventNames = []
+  //     for (var i = 0; i< val.length;i++){
+  //       // console.log(val[i])
+  //       for(var j = 0; j< val[i].Eventlist.length;j++){
+  //         //console.log(val[i].Eventlist[j])
+  //         var inputS = String(val[i].Eventlist[j].Event)
+  //         input_list_EventNames.push(inputS)
+  //       }
+  //     }
+  //     this.EventNameList = input_list_EventNames
+  //   //   console.log("hello from showAllEventNames")
+  //   //   console.log(this.EventNameList)
      
-    })
-  }
+  //   })
+  // }
 
 
   // constructor() { }
 
   ngOnInit() {
     this.app.show();
-   this.runService.showOutcomeTopics().subscribe((val: OutcomeList) => //send http request and results are subscribed into val
+   this.runName = this.runService.runName
+   this.runService.showOutcomeTopics(this.runName).subscribe((val: OutcomeList) => //send http request and results are subscribed into val
     {
       
     //   console.log("hello from console")
@@ -183,7 +305,7 @@ export class HeatmapComponent{
       this.OutcomeList = input_listOutcomes
     //   console.log("hello from showAllOutcomes")
     //   console.log(this.OutcomeList)
-    this.runService.showEventNames().subscribe((val: Run[]) => //send http request and results are subscribed into val
+    this.runService.showEventNames(this.runName).subscribe((val: Run[]) => //send http request and results are subscribed into val
     {
       // console.log("hello from showAllEventNames")
       //this.r = val; //send the results the element r 
@@ -200,7 +322,7 @@ export class HeatmapComponent{
       this.EventNameList = input_list_EventNames
     //   console.log("hello from showAllEventNames")
     //   console.log(this.EventNameList)
-    this.runService.showScores().subscribe((val: Run[]) => //send http request and results are subscribed into val
+    this.runService.showScores(this.runName).subscribe((val: Run[]) => //send http request and results are subscribed into val
     {
       
       // console.log("hello from showAllScores")
@@ -229,84 +351,13 @@ export class HeatmapComponent{
       this.ScoreList = final_row_Event_cell_list
     //   console.log(this.ScoreList)
       this.alllist = this.ScoreList
-      this.chart = new Chart({
-        chart: {
-          type: 'heatmap',
-          margin: [80, 80, 140, 130]
-        },
-        title: {
-            text: 'Highcharts heat map',
-            align: 'left',
-            x: 60
-        },
-    
-        subtitle: {
-            text: 'Curriculum Mapping using Mapradish',
-            align: 'left',
-            x: 60
-        },
-        credits: {
-          enabled: false
-        },
-        xAxis: {
-            title: {
-                text: 'Outcomes',
-                reserveSpace: true
-            },
-            categories: this.OutcomeList,
-            allowDecimals: false,
-            labels: {
-                reserveSpace: true
-            }
-            
-        },
-        yAxis: {
-            title: {
-                text: 'Events'
-            },
-            categories: this.EventNameList,
-            
-        },
-        colorAxis: {
-            stops: [
-                [0, '#3060cf'],
-                [0.5, '#fffbbc'],
-                [0.9, '#c4463a'],
-                [1, '#c4463a']
-            ],
-            min: 0,
-            max: 1,
-            startOnTick: false,
-            endOnTick: false,
-            labels: {
-                format: '{value}'
-            },
-        },
-        plotOptions: {
-            series: {
-                
-            },
-            heatmap: {
-                
-            }
-        },
-        series: [
-          {
-            type: undefined,
-            name: 'Curriculum Mapping',
-            turboThreshold: 60000,
-            data: this.getData(),
-            boostThreshold: 60000,
-            borderWidth: 0,
-            nullColor: '#EFEFEF',
-            tooltip: {
-                // headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
-                pointFormat: '<b>{point.custom.event} {point.custom.outcome} {point.value}</b>'
-            }
-            
-          }
-        ]
-      });
+      this.options.series[0].data = this.getData();
+      
+      this.options.xAxis.categories = this.OutcomeList;
+      this.options.yAxis.categories = this.EventNameList;
+    //   this.chart = new Chart(options: this.options);
+    //   this.chart = Highcharts.chart('container', this.options);
+      this.chart = new Chart(this.options);
     })
     })
       

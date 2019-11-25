@@ -15,27 +15,24 @@ export class ListComponent implements OnInit {
   constructor(private runService: RunService, private router: Router) { }
   r: Run[] // class has element r of type array of Runs
   displayColumns = ['block', 'year', 'event', 'outcome topic', 'score'] // needed for UI table..?
-  showRun1(){
-    this.runService.showRun1().subscribe((val: Run[]) => //send http request and results are subscribed into val
-    {
-      this.r = val; //send the results the element r 
-      console.log(this.r[0].Block)
-    })
-  }
-  AddCellToRun()
+  // displayOutcomes()
+  // {
+  //   this.runService.showOutcomeTopics().subscribe((val)=>{
+  //     console.log(val)
+  //     console.log(this.runService.passVariable)
+  //   })
+  // }
+  goToedit()
   {
-    this.runService.postCelltoRun(3, 2, "event bob", "topic HAHA", .9) 
-    .subscribe 
-    ( // sent http post with necessary data to request
-      data =>{console.log("post successful")}, 
-      error => {console.log("ERROR ", error)} 
-    )
-    this.showRun1() // update Runs array once http post is done
+    console.log("got to edit")
+    this.runService.passVariable = "pASS SUCEEDed"
+    this.router.navigateByUrl("/edit/run")
   }
   ngOnInit() {
     //console.log("should print in list init")
-    this.showRun1()
+    //this.displayOutcomes()
     //this.AddCellToRun()
     //console.log(this.r)
+    this.goToedit()
   }
 }

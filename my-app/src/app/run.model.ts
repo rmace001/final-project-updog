@@ -21,4 +21,6 @@ interface Outcome{
   export interface OutcomeList{ //NEED RESARCH: WILL THIS BE ANY FASTER THAN USING RUN FOR LIST ALL OUTCOME FUNCTION
     Eventlist: Array<{OutcomeTopic: String}>
   }
-    
+  export interface RunName{
+    runName: string
+  }
