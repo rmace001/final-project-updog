@@ -15,10 +15,16 @@ export class LoginComponent implements OnInit {
 
   constructor(private userService: UserService, private router: Router,public app: AppComponent) { }
   id: String
-  checker: boolean = false;
+  checker: boolean = false
+  ofHouse: String
+  name: String
   ngOnInit() {
     this.app.hide();
-    //this.loginValid();
+
+  }
+
+  redirectFunc(){
+    window.location.href ='/home';
   }
 
   loginValid(){
@@ -30,6 +36,34 @@ export class LoginComponent implements OnInit {
       ()=>{
         if(this.userService.validLog){
           this.checker = true;
+          this.name = this.userService.firstname;
+          this.ofHouse = this.userService.lastname;
+          console.log("valid")
+        }
+        else{
+          this.checker = false;
+          alert("Invald username or password");
+          console.log("not user")
+        }
+      },
+      // ()=>
+      // {
+      //   alert("Error code: 423535");
+      //   console.log("we're fucked idk how to fix")
+      // }
+    )
+  }
+  loginGuest(){
+
+    console.log("HELLO FROM guest")
+    var u:string = "guest00";
+    var p:string = "guest00";
+    this.userService.getUserPassVeri(u,p).then(
+      ()=>{
+        if(this.userService.validLog){
+          this.checker = true;
+          this.name = "user";
+          this.ofHouse = "guest"
           console.log("valid")
         }
         else{

@@ -13,11 +13,11 @@
         <p>Password</p>
         <input type="password" name="" placeholder="Enter Password" id="loginPassword">
         <div align="center">
-          <button id="loggingin" (click)="loginValid()">Login</button>
+          <button id="loggingin" (click)="loginValid()">Login</button><br>
+          <a href="#" (click)="loginGuest()">Continue as guest user</a>
           <div *ngIf="checker">
-            <a href="#" routerLink="/home">continue</a>
+            {{redirectFunc()}}
           </div>
-          <br>
         </div><br>
         <a href="#" routerLink="/register">Register/Sign-up</a><br>
         <!-- <a href="#" routerLink="/home" id="loginGuest">Sign in as Guest</a><br> -->

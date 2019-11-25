@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
+import {LoginComponent} from '../login/login.component'
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,8 @@ export class HomeComponent implements OnInit {
   clickCounter: number = 0;
   name: string = '';
   showSpinner: boolean = false;
+  first: String
+  last: String
 
   loadData(){
     this.showSpinner = true;
@@ -17,7 +20,7 @@ export class HomeComponent implements OnInit {
       this.showSpinner = false;
     }, 6000);
   }
-  constructor(public app: AppComponent) { }
+  constructor(public app: AppComponent/*, public login: LoginComponent*/) { }
 
   ngOnInit() {
     this.app.show();
