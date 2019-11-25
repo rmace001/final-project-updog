@@ -7,9 +7,11 @@ import { Run, OutcomeList} from '../run.model'
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router'
 import {animate, state, style, transition, trigger} from '@angular/animations';
-
+import * as HighchartsMore from "highcharts/highcharts-more";
+import * as HighchartsExporting from "highcharts/modules/exporting";
 import { MatSort, MatSortable, MatPaginator, MatTableDataSource } from '@angular/material';
 import { chart } from 'highcharts/highcharts.src';
+import { ThrowStmt } from '@angular/compiler';
 // import { eventNames } from 'cluster';
 // import { DataSource } from '@angular/cdk/table';
 // import { ChartsModule } from 'ng2-charts';
@@ -27,8 +29,13 @@ export class HeatmapComponent implements OnInit {
     EventNameList
     ScoreList
     alllist
+    chartCallback;
+    chartConstructor = "chart";
+    updateFromInput = false;
+    changing: boolean = false;
     runName: string = ""
-    public chart: any;
+    // public chart: any;
+    chart;
     public dynamic_data: any; 
     public options: any = {
         chart: {
@@ -38,6 +45,9 @@ export class HeatmapComponent implements OnInit {
             width: 1200,
             margin: [80, 5, 400, 230],
             spacing: [10, 10, 100, 10]
+          },
+          exporting: {
+            enabled: true
           },
           title: {
               text: 'Highcharts heat map',
@@ -131,10 +141,17 @@ export class HeatmapComponent implements OnInit {
             }
           ]
     };
-    constructor(private runService: RunService, private router: Router) { }
+    constructor(private runService: RunService, private router: Router) {
+        const self = this;
+
+        this.chartCallback = chart => {
+        self.chart = chart;
+        };
+     }
     r: Run[] // class has element r of type array of Runs
     // @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
     // @ViewChild(MatSort, {static: true}) sort: MatSort;
+    
   getData(){ // returns list of objects i.e. the datalist for my chart
     // this.showAllOutcomes()
     // this.showAllScores()
@@ -355,5 +372,49 @@ export class HeatmapComponent implements OnInit {
     })
   }
   
+  changeChart(){
+        
+    var selections: any[] = [0,4,13]; 
+    var newCategories = [];
+    var newData = []; 
+    var tempPoint: any;
+    
 
+    for(var i = 0; i < selections.length; i++){
+        newCategories.push(this.options.yAxis.categories[selections[i]]);
+        for (var j = 0; j < this.OutcomeList.length; j++){
+            tempPoint = this.options.series[0].data[selections[i]*this.OutcomeList.length + j];
+            tempPoint.y = i;
+            newData.push(tempPoint);
+        }
+    }
+    this.chart = null;
+    this.options.yAxis.categories = newCategories;
+    this.options.series[0].data = newData;
+    this.changing = false;
+    this.chart = new Chart(this.options);
+    
+    // const self = this,
+    // chart = this.chart;
+
+    // chart.showLoading();
+    // setTimeout(() => {
+    //     chart.hideLoading();
+
+    //     self.options.series = [
+    //     {
+    //         data: newData
+    //     }
+    //     ];
+        
+    //     self.options.yAxis.categories = newCategories;
+
+    //     self.updateFromInput = true;
+    // }, 2000);
+    
+    
+    
+ }
+  
+  
 }

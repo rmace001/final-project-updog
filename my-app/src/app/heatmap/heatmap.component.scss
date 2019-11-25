@@ -189,3 +189,19 @@
 .button a {
     margin-right: 8px;
   }
+  
+span {
+    user-select: none;
+    cursor: pointer;
+    padding: .3em .8em;
+    background: lightgreen;
+    font-weight: bold;
+}
+
+.play-container {
+    padding: 3em;
+    border: 1px solid lightsalmon;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    
+}

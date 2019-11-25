@@ -1,5 +1,33 @@
 <div [chart] ="chart"></div>
 
+<!-- <div class="boxChart__container">
+        <div>
+            <highcharts-chart
+                id="container" 
+                [Highcharts]="Highcharts"
+                [constructorType]="chartConstructor"
+                [options]="options"
+                [callbackFunction]="chartCallback"
+                [(update)]=updateFromInput
+                >
+            </highcharts-chart>
+        </div>
+    </div> -->
+
+
+
+<div class="play-container">
+    <p>Do you want to <span (click)="changeChart()">change chart</span>?</p>
+</div>
+
+<div class="play-container">
+    <ng-template [ngIf]= "changing" [ngIfElse]="none">
+        <p><strong>Loading...</strong></p>
+    </ng-template>
+    <ng-template #none>
+        
+    </ng-template>
+</div>
 
 <div class="wrapper">
     <button mat-raised-button class = "map_btnn" routerLink="/bloop">Return to previous page</button>
