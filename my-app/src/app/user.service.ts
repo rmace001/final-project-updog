@@ -1,7 +1,7 @@
 import { Injectable, ReflectiveInjector } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 //import {toPromise} from 'rxjs';
-import {Http, Headers, Response} from '@angular/http';
+// import {Http, Headers, Response} from '@angular/http';
 import {User} from './user.model';
 
 @Injectable({
