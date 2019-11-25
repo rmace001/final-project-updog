@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AppComponent } from '../app.component';
+import {LoginComponent} from '../login/login.component'
+import {UserService} from '../user.service'
 
 @Component({
   selector: 'app-home',
@@ -6,13 +9,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-
   clickCounter: number = 0;
   name: string = '';
+  showSpinner: boolean = false;
+  first: String
+  last: String
 
-  constructor() { }
+  loadData(){
+    this.showSpinner = true;
+    setTimeout(() =>{
+      this.showSpinner = false;
+    }, 6000);
+  }
+  constructor(public app: AppComponent, private User: UserService) { }
 
   ngOnInit() {
+    this.app.show();
+    console.log(this.User.firstname);
+    console.log(this.User.lastname);
   }
 
   countClick(){

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit,OnDestroy} from '@angular/core';
 import { MapChart, Chart } from 'angular-highcharts';
+import { AppComponent } from '../app.component';
 
 
 import { RunService } from '../run.service' 
@@ -29,9 +30,9 @@ export class DisplayChartComponent implements OnInit {
   alllist
   chart
   check = false
-  constructor(private runService: RunService, private router: Router) { }
-  r: Run[] // class has element r of type array of Runs
-  getData(){ // returns list of objects i.e. the datalist for my chart
+  constructor(private runService: RunService, private router: Router, public app: AppComponent) { }
+    r: Run[] // class has element r of type array of Runs
+    getData(){ // returns list of objects i.e. the datalist for my chart
   
     var datalist = [];
     for (var i = 0; i < this.EventNameList.length; i++){ // row
@@ -117,6 +118,7 @@ export class DisplayChartComponent implements OnInit {
 }
   ngOnInit() {
   //  console.log("Start here ", this.runService.runName)
+  this.app.show();
    this.runchoiceName = this.runService.runName
    this.runService.showOutcomeTopics(this.runchoiceName).subscribe((val: OutcomeList) => //send http request and results are subscribed into val
     {

@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 var Run = require('./models/run') //Schema (format) for run collection
+var User = require('./models/user')
 var Runs = require('./models/runs')
 // var EventSchema = require('./models/run')
 // var OutcomeSchema = require('./models/run') 
@@ -37,6 +38,7 @@ mongoose.connect(uri, options) //connect to mongodb cs179 with my crudentials an
 // const R1 = mongoose.model(test, Run, test) // make a model for run1 with mongoose model to easily access database
 const runNames = mongoose.model("runs", Runs)
 
+const UserModel = mongoose.model('user',User)
 //writing route will finish later
 // app.post("/addCelltoRun1", (req, res) =>
 // {
@@ -218,6 +220,33 @@ app.get("/listScorewithEventAndOutcome/:r/:e/:o", (req, res) => {
     })
 })
 
+app.post("/addCelltoRun1", (req, res) =>
+{
+    //http get can be sent to localhost:4000/addCelltoRun1
+    var r = new UserModel(req.body) //declare new run model and get instance from request.body
+    r.save() //mongoose function for collection.insert
+    .then(run => {
+        res.status(200).json({'run':'added successfully'}) //return status 200 if insert went thru
+    })
+    .catch(err => {
+        res.status(400).send("failed to create new cell") //return status 400 if insert failed
+    })
+})
+
+app.get("/validUser/:user/:pass", (req, res)=>
+{
+    var u = req.params.user
+    var p = req.params.pass
+    UserModel.findOne({Username: u, Password: p})
+    .select("_id Firstname Lastname").lean().exec(function(err,run) {
+        if(err){
+            console.log("Error" + err)
+        }
+        else{
+            res.json(run)
+        }
+    })
+})
 // R1.findOne({
 //     'Eventlist.Event': '401001 Overview_Pituitary'
 //     // ,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { AppComponent } from '../app.component';
 export interface Headers {
   id: number;
   name: string;
@@ -22,11 +22,12 @@ const ELEMENT_DATA: Headers[] = [
 })
 export class RecentRunsComponent implements OnInit {
 
-  constructor() { }
+  constructor(public app: AppComponent) { }
 
   displayedColumns: string[] = ['id', 'name', 'something'];
   dataSource = ELEMENT_DATA;
   ngOnInit() {
+    this.app.show();
     console.log("hi from recent")
   }
 
