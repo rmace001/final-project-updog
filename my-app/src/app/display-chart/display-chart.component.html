@@ -1,21 +1,31 @@
 <!-- <div [chart] ="chart"></div> -->
 <div *ngIf="isLoaded">Text to show</div>
 <div class="wrapper3" >
-        <mat-form-field>
-            <mat-label>Select a Run</mat-label>
-            <mat-select disableRipple  [(ngModel)]="runchoiceNamme" (change)="selectChangeHandler($event)"> 
-                    <mat-option *ngFor="let item of outcomed"  [value]="item.name">{{item.name}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-</div>
-Here is the information of Outcome Topic: -> {{runchoiceNamme}}
-<div>   
-        pie chart
-        <div id="chartContainer1" style="height: 500px; width: 100%;"  ></div>
-        column chart
-        <div id="chartContainer2" style="height: 500px; width: 100%;"></div>
+        <select class='select-option'
+        #mySelect
+        (change)='onOptionsSelected(mySelect.value)'>
+       <option class='option' 
+       *ngFor='let option of outcomed' 
+       [value]="option.name">{{option.name}}</option>
+    </select>
 </div>
 
+Here is the Outcome Topic you pick: -> {{outcomeName}}
+<!-- <div>   
+        pie chart
+        <div id="chartContainer1" style="height: 500px; width: 100%;"  >
+                <div class="loader"></div>
+        </div>
+        column chart
+        <div id="chartContainer2" style="height: 500px; width: 100%;">
+                <div class="loader"></div>    
+        </div>
+</div> -->
+
+<div id="chartContainer3" style="height: 500px; width: 100%;">
+        <div class="loader"></div>
+        <!-- </div> -->
+</div>
 
 <div class="wrapper">
     <button mat-raised-button class = "map_btnn" routerLink="/bloop">Return to previous page</button>
