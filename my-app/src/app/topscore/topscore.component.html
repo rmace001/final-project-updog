@@ -1,0 +1,30 @@
+<div>
+        <div class="wrapper3" style="height: 100px; width: 100%; float: left;">
+                        <button mat-raised-button class="btn btn-primary" routerLink="/display-chart">Return to previous page</button>
+        </div>    
+ </div>
+ <div class="wrapper2">
+        <label class = "lab">You want to check the top10, 20 or 30 of Outcome Topic {{outcomename}}</label>
+        <mat-radio-group class= "radio" aria-label="Select an option" [(ngModel)]="radioChoice">
+            <mat-radio-button class = "radiospace" value="1">Top 10 </mat-radio-button>
+            <mat-radio-button class = "radiospace" value="2">Top 20 </mat-radio-button>
+            <mat-radio-button class = "radiospace" value="3">Top 30 </mat-radio-button>
+        </mat-radio-group>
+        <!-- <div>Your favorite season is: {{favoriteSeason}}</div> -->
+</div>
+
+<div class="item 4" style="height: 500px; width: 100%; float: left;" *ngIf="radioChoice == 1?true:false">
+        <table class='table'>
+        <option class='option' *ngFor='let item of top10' [value]="item.y">{{item.y}} =>{{item.label}} </option>
+        </table>
+</div>
+<div class="item 4" style="height: 500px; width: 100%; float: left;" *ngIf="radioChoice == 2?true:false">
+        <table class='table'>
+        <option class='option' *ngFor='let item of top20' [value]="item.y">{{item.y}} =>{{item.label}} </option>
+        </table>
+</div>
+<div class="item 4" style="height: 500px; width: 100%; float: left;" *ngIf="radioChoice == 3?true:false">
+        <table class='table'>
+        <option class='option' *ngFor='let item of top30' [value]="item.y">{{item.y}} =>{{item.label}} </option>
+        </table>
+</div>

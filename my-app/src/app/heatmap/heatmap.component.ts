@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MapChart, Chart } from 'angular-highcharts';
+import { AppComponent } from '../app.component';
 
 import * as Highcharts from 'highcharts';
 import { RunService } from '../run.service' 
@@ -141,7 +142,7 @@ export class HeatmapComponent implements OnInit {
             }
           ]
     };
-    constructor(private runService: RunService, private router: Router) {
+    constructor(private runService: RunService, private router: Router, public app: AppComponent) {
         const self = this;
 
         this.chartCallback = chart => {
@@ -293,6 +294,7 @@ export class HeatmapComponent implements OnInit {
   // constructor() { }
 
   ngOnInit() {
+    this.app.show();
    this.runName = this.runService.runName
    this.runService.showOutcomeTopics(this.runName).subscribe((val: OutcomeList) => //send http request and results are subscribed into val
     {
@@ -374,7 +376,7 @@ export class HeatmapComponent implements OnInit {
   
   changeChart(){
         
-    var selections: any[] = [0,4,13]; 
+    var selections: any[] = [0,4,13, 45, 15]; 
     var newCategories = [];
     var newData = []; 
     var tempPoint: any;

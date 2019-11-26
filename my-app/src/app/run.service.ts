@@ -6,6 +6,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RunService {
   runName = ""
+  outcomeName = ""
+  count_score = []
+  top10score = []
+  top20score = []
+  top30score = []
   serverURLi = "http://localhost:4000" // this is the server the backend is running from 
   constructor(private http: HttpClient) {}
   showRuns(run: string)

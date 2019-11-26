@@ -23,7 +23,7 @@ import * as more from 'highcharts/highcharts-more.src';
 import * as exporting from 'highcharts/modules/exporting.src';
 import * as hizzlemap from 'highcharts/modules/heatmap.src';
 import { LoginComponent } from './login/login.component';
-
+import { ChartsModule } from 'ng2-charts';
 // import * as CanvasJS from '../assets/canvasjs.min.js';
 // import { ChartsModule } from 'ng2-charts';
 import { 
@@ -36,9 +36,12 @@ import {
   MatRippleModule,
   MatPaginatorModule,
   MatSortModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { DisplayChartComponent } from './display-chart/display-chart.component';
+import { RegisterComponent } from './register/register.component';
+import { TopscoreComponent } from './topscore/topscore.component';
 
 // const routes: Routes = [
 //   // {path: 'create', component: CreateComponent},
@@ -52,6 +55,10 @@ import { DisplayChartComponent } from './display-chart/display-chart.component';
 //   { path: 'recent', component: RecentRunsComponent},
 //   { path: 'heatmap', component: HeatmapComponent}
 // ];
+const MaterialComponents = [
+  MatProgressSpinnerModule
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +68,11 @@ import { DisplayChartComponent } from './display-chart/display-chart.component';
     HeatmapComponent,
     DisplayChartComponent,
 
-    LoginComponent
+    LoginComponent,
+
+    RegisterComponent,
+
+    TopscoreComponent
 
   ],
   imports: [
@@ -93,7 +104,8 @@ import { DisplayChartComponent } from './display-chart/display-chart.component';
     MatStepperModule,
     FormsModule,
     ReactiveFormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    ChartsModule
     
   ],
   providers: [

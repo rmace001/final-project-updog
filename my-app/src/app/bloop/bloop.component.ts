@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppComponent } from '../app.component';
 import { RunService } from '../run.service' 
 import { Run, RunName} from '../run.model'
 import { Router } from '@angular/router'
@@ -12,7 +13,7 @@ import { Router } from '@angular/router'
 
 export class BloopComponent implements OnInit {
 
-  constructor(private runService: RunService,private router: Router) { }
+  constructor(private runService: RunService,private router: Router, public app: AppComponent) { }
 
   r: RunName[] // class has element r of type array of Runs
   list_a = []
@@ -34,6 +35,7 @@ export class BloopComponent implements OnInit {
     this.runService.runName = this.runchoice
   }
   ngOnInit() {
+    this.app.show();
 
     this.showAllCollections()
     
