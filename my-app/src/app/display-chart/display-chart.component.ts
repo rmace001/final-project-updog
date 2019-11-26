@@ -21,6 +21,8 @@ import { element } from 'protractor';
 })
 export class DisplayChartComponent implements OnInit {
   @ViewChild(BloopComponent, {static:true}) bloop_c;
+  //defaultSelect:string = "Hi! Please pick up which outcome topic you like in here"
+  checkButton:boolean = false;
   option
   runchoiceName: string = ""
   outcomeName = ""
@@ -131,7 +133,9 @@ calculate(score_list: any [], outcomeName: string){
     // Here finish the function to calculate the number of each range of score
 }
   onOptionsSelected(value:string){
+    
     if(value != "Hi! Please pick up which outcome topic you like in here"){
+      this.checkButton = true;
       this.runService.outcomeName = value
       // console.log("the selected value is " + value);
       var local_outcomelist = this.OutcomeList
@@ -203,12 +207,14 @@ calculate(score_list: any [], outcomeName: string){
       
     } // end of if-loop for check string is "pick up which outcome topic you want"
     else{
+      this.checkButton = false;
       console.log("pick up which outcome topic you want ++++++++++++++++++++++++++++")
     }
     
 }
   ngOnInit() {
   //  console.log("Start here ", this.runService.runName)
+  //this.defaultSelect = this.defaultSelect;
   this.app.show();
    this.runchoiceName = this.runService.runName
    this.runService.showOutcomeTopics(this.runchoiceName).subscribe((val: OutcomeList) => //send http request and results are subscribed into val

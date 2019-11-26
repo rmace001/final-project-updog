@@ -88,10 +88,12 @@
 This is run->{{runchoice}}
 
 
+<div *ngIf="runchoice">
+    <div class="wrapper"  *ngIf="radioChoice == 1?true:false">
+        <button mat-raised-button class = "map_btnn" (click)="open($event)" routerLink="/heatmap" >Map It</button>
+    </div>
 
-<div class="wrapper"  *ngIf="radioChoice == 1?true:false">
-    <button mat-raised-button class = "map_btnn" (click)="open($event)" routerLink="/heatmap" >Map It</button>
-</div>
-<div class="wrapper"  *ngIf="radioChoice == 2?true:false">
-    <button mat-raised-button class = "map_btnn" (click)="open($event)" routerLink="/display-chart">Map It</button>
+    <div class="wrapper"  *ngIf="radioChoice == 2?true:false">
+        <button mat-raised-button class = "map_btnn" (click)="open($event)" routerLink="/display-chart">Map It</button>
+    </div>
 </div>
