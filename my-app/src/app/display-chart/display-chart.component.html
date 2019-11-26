@@ -75,7 +75,7 @@ Here is the Outcome Topic you pick: -> {{outcomeName}}
          </div>
         
          <div>
-                <div class="wrapper4">
+                <div class="wrapper4" *ngIf = "this.checkButton">
                                 <button mat-raised-button class="btn btn-primary" routerLink="/topscore">Show top score</button>
                 </div>    
 </div>
