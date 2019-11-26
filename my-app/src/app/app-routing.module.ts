@@ -8,7 +8,7 @@ import { HeatmapComponent } from './heatmap/heatmap.component';
 import { DisplayChartComponent } from './display-chart/display-chart.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-
+import {TopscoreComponent } from './topscore/topscore.component';
 
 
 const routes: Routes = [
@@ -19,7 +19,8 @@ const routes: Routes = [
   { path: 'recent', component: RecentRunsComponent},
   { path: 'heatmap', component: HeatmapComponent},
   { path: 'display-chart',component: DisplayChartComponent},
-  { path: 'register', component: RegisterComponent}
+  { path: 'register', component: RegisterComponent},
+  { path: 'topscore', component :TopscoreComponent}
 ];
 
 @NgModule({
