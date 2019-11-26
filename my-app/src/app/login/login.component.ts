@@ -39,26 +39,31 @@ export class LoginComponent implements OnInit {
     console.log("HELLO FROM LOGIN")
     var u:string = (<HTMLInputElement>document.getElementById("loginUser")).value;
     var p:string = (<HTMLInputElement>document.getElementById("loginPassword")).value;
-    this.userService.getUserPassVeri(u,p).then(
-      ()=>{
-        if(this.userService.validLog){
-          this.checker = true;
-          // this.name = this.userService.firstname;
-          // this.ofHouse = this.userService.lastname;
-          console.log("valid")
-        }
-        else{
-          this.checker = false;
-          alert("Invald username or password");
-          console.log("not user")
-        }
-      },
-      // ()=>
-      // {
-      //   alert("Error code: 423535");
-      //   console.log("we're fucked idk how to fix")
-      // }
-    )
+    if((u == "") || (p == "")){
+      alert("One or more fields cannot be left blank!")
+    }
+    else{
+      this.userService.getUserPassVeri(u,p).then(
+        ()=>{
+          if(this.userService.validLog){
+            this.checker = true;
+            // this.name = this.userService.firstname;
+            // this.ofHouse = this.userService.lastname;
+            console.log("valid")
+          }
+          else{
+            this.checker = false;
+            alert("Invald username or password");
+            console.log("not user")
+          }
+        },
+        // ()=>
+        // {
+        //   alert("Error code: 423535");
+        //   console.log("we're fucked idk how to fix")
+        // }
+      )
+    }
   }
   loginGuest(){
 
