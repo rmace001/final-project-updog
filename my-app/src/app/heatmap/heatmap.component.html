@@ -29,14 +29,23 @@
     <p>Do you want to <span (click)="changeChart()">change chart</span>?</p>
 </div>
 
-<div class="play-container">
+<div class="wrapper3" *ngIf="this.OutcomeDict ?true:false" >
+    <mat-form-field>
+        <mat-label>Select an Outcome</mat-label>
+        <mat-select disableRipple  [(ngModel)]="OutcomeChoice"> 
+                <mat-option *ngFor="let item of model"  [value]="item.name" >{{item.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<!-- <div class="play-container">
     <ng-template [ngIf]= "changing" [ngIfElse]="none">
         <p><strong>Loading...</strong></p>
     </ng-template>
     <ng-template #none>
         
     </ng-template>
-</div>
+</div> -->
 
 <div class="wrapper">
     <button mat-raised-button class = "map_btnn" routerLink="/bloop">Return to previous page</button>
