@@ -9,7 +9,8 @@ import { DisplayChartComponent } from './display-chart/display-chart.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {TopscoreComponent } from './topscore/topscore.component';
-
+import {ComparedTwoComponent} from './compared-two/compared-two.component';
+import { from } from 'rxjs';
 
 const routes: Routes = [
   { path: '', component : LoginComponent},
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'heatmap', component: HeatmapComponent},
   { path: 'display-chart',component: DisplayChartComponent},
   { path: 'register', component: RegisterComponent},
-  { path: 'topscore', component :TopscoreComponent}
+  { path: 'topscore', component :TopscoreComponent},
+  { path: 'compared-two', component: ComparedTwoComponent}
 ];
 
 @NgModule({

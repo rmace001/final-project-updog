@@ -42,6 +42,7 @@ import {
 import { DisplayChartComponent } from './display-chart/display-chart.component';
 import { RegisterComponent } from './register/register.component';
 import { TopscoreComponent } from './topscore/topscore.component';
+import { ComparedTwoComponent } from './compared-two/compared-two.component';
 
 // const routes: Routes = [
 //   // {path: 'create', component: CreateComponent},
@@ -72,7 +73,9 @@ const MaterialComponents = [
 
     RegisterComponent,
 
-    TopscoreComponent
+    TopscoreComponent,
+
+    ComparedTwoComponent
 
   ],
   imports: [
