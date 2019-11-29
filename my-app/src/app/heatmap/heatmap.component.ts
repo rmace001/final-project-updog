@@ -13,12 +13,7 @@ import * as HighchartsExporting from "highcharts/modules/exporting";
 import { MatSort, MatSortable, MatPaginator, MatTableDataSource } from '@angular/material';
 import { chart } from 'highcharts/highcharts.src';
 import { ThrowStmt } from '@angular/compiler';
-// import { eventNames } from 'cluster';
-// import { DataSource } from '@angular/cdk/table';
-// import { ChartsModule } from 'ng2-charts';
-// import * as CanvasJS from '../../../assets/canvasjs.min.js';
-// import { ChartDataSets, ChartOptions } from 'chart.js';
-// import { Color, BaseChartDirective, Label } from 'ng2-charts';
+
 @Component({
   selector: 'app-heatmap',
   templateUrl: './heatmap.component.html',
@@ -27,15 +22,18 @@ import { ThrowStmt } from '@angular/compiler';
 export class HeatmapComponent implements OnInit {
     DataSource1
     OutcomeList
+    OutcomeDict = []
+    model:any
     EventNameList
     ScoreList
     alllist
     chartCallback;
+    OutcomeChoice = "" // outcome choice to heatmap
     chartConstructor = "chart";
     updateFromInput = false;
     changing: boolean = false;
     runName: string = ""
-    // public chart: any;
+    
     chart;
     public dynamic_data: any; 
     public options: any = {
@@ -46,101 +44,98 @@ export class HeatmapComponent implements OnInit {
             width: 1200,
             margin: [80, 5, 400, 230],
             spacing: [10, 10, 100, 10]
-          },
-          exporting: {
+        },
+        exporting: {
             enabled: true
-          },
-          title: {
-              text: 'Highcharts heat map',
-              align: 'left',
-              x: 60
-          },
-      
-          subtitle: {
-              text: 'Curriculum Mapping using Mapradish',
-              align: 'left',
-              x: 60
-          },
-          credits: {
+        },
+        title: {
+            text: 'Highcharts heat map',
+            align: 'left',
+            x: 60
+        },
+        subtitle: {
+            text: 'Curriculum Mapping using Mapradish',
+            align: 'left',
+            x: 60
+        },
+        credits: {
             enabled: false
-          },
-          xAxis: {
-              title: {
-                  text: 'Outcomes',
-                  reserveSpace: true
-              },
+        },
+         xAxis: {
+            title: {
+                text: 'Outcomes',
+                reserveSpace: true
+            },
             //   categories: this.OutcomeList,
             // make sure to update xAxis categories to this.OutcomeList
-              categories: ['Outcome 1'],
-              allowDecimals: false,
-              labels: {
-                  // reserveSpace: true
-              },
-              scrollbar: {
+            categories: ['Outcome 1'],
+            allowDecimals: false,
+            labels: {
+                // reserveSpace: true
+            },
+            scrollbar: {
                 enabled: true
-            }
-              
-          },
-          yAxis: {
-              title: {
-                  text: 'Events'
-              },
+            } 
+        },
+        yAxis: {
+            title: {
+                text: 'Events'
+            },
             //   categories: this.EventNameList,
               // be sure to update the yAxis categories in the update funciton
-              categories: ['this.EventNameList'],
-              scrollbar: {
+            categories: ['this.EventNameList'],
+            scrollbar: {
                 enabled: true
             }
             //   tickLength: 100
               
-          },
-          legend:{
-              align: 'center',
-              verticalAlign: 'top',
-              floating: true        
-         },
-          colorAxis: {
-              stops: [
-                  [0, '#3060cf'],
-                  [0.5, '#fffbbc'],
-                  [0.9, '#c4463a'],
-                  [1, '#c4463a']
-              ],
-              // layout: 'vertical',
-              min: 0,
-              max: 1,
-              startOnTick: false,
-              endOnTick: false,
-              labels: {
-                  format: '{value}'
-              },
-          },
-          plotOptions: {
-              series: {
-                  
-              },
-              heatmap: {
-                  rowsize: 1
-              }
-          },
-          series: [
-            {
-              type: undefined,
-              name: 'Curriculum Mapping',
-              turboThreshold: 60000,
-            //   data: this.getData(),
-              // be sure to update the series data in the update function
-              data: this.getData2(),
-              boostThreshold: 60000,
-              borderWidth: 0,
-              nullColor: '#EFEFEF',
-              tooltip: {
-                  // headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
-                  pointFormat: '{point.custom.event} {point.custom.outcome} <b>{point.value}</b>'
-              }
-              
+        },
+        legend:{
+            align: 'center',
+            verticalAlign: 'top',
+            floating: true        
+        },
+        colorAxis: {
+            stops: [
+                [0, '#3060cf'],
+                [0.5, '#fffbbc'],
+                [0.9, '#c4463a'],
+                [1, '#c4463a']
+            ],
+            // layout: 'vertical',
+            min: 0,
+            max: 1,
+            startOnTick: false,
+            endOnTick: false,
+            labels: {
+                format: '{value}'
+            },
+        },
+        plotOptions: {
+            series: {
+                
+            },
+            heatmap: {
+                rowsize: 1
             }
-          ]
+        },
+        series: [
+            {
+                type: undefined,
+                name: 'Curriculum Mapping',
+                turboThreshold: 60000,
+                // data: this.getData(),
+                // be sure to update the series data in the update function
+                data: this.getData2(),
+                boostThreshold: 60000,
+                borderWidth: 0,
+                nullColor: '#EFEFEF',
+                tooltip: {
+                    // headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
+                    pointFormat: '<b>Event: </b> {point.custom.event} <br/><b>Outcome: </b>{point.custom.outcome} <br/><b>Score: </b>{point.value}'
+                }
+            }
+        ]
     };
     constructor(private runService: RunService, private router: Router, public app: AppComponent) {
         const self = this;
@@ -150,273 +145,142 @@ export class HeatmapComponent implements OnInit {
         };
      }
     r: Run[] // class has element r of type array of Runs
-    // @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-    // @ViewChild(MatSort, {static: true}) sort: MatSort;
     
-  getData(){ // returns list of objects i.e. the datalist for my chart
-    // this.showAllOutcomes()
-    // this.showAllScores()
-    // this.showAllEventNames()
-    var datalist = [];
     
-    // console.log("hi")
-    // console.log(this.EventNameList.length)
-    // console.log(this.OutcomeList.length)
-    // console.log(this.OutcomeList[0])
-    // console.log(this.EventNameList[0])
-    // console.log(this.ScoreList)
-    // console.log(this.ScoreList[0][0])
-    // console.log(this.ScoreList[0][1])
-    for (var i = 0; i < this.EventNameList.length; i++){ // row
-    // for (var i = 0; i < 100; i++){ // row
-      var eventNames = this.ScoreList[i][0]
-        for (var j = 0; j < this.OutcomeList.length; j++){ // order or cell in row
-            datalist.push({
-                            // x: this.EventNameList[j],
-                            x: j,
-                            // y: this.OutcomeList[i],
-                            y: i,
-                            value: this.ScoreList[i][1][j],
-                            name: 'The Cell',
-                            // event: 'The Cell',
-                            // outcome: 'Introduction and General Biology'
-                            custom: {event: eventNames, outcome: this.OutcomeList[j]}
-                        });
+    getData(){ // returns list of objects i.e. the datalist for my chart
+        var datalist = [];
+        for (var i = 0; i < this.EventNameList.length; i++){ // row
+        // for (var i = 0; i < 100; i++){ // row
+            var eventNames = this.ScoreList[i][0]
+            for (var j = 0; j < this.OutcomeList.length; j++){ // order or cell in row
+                datalist.push({
+                                x: j,
+                                y: i,
+                                value: this.ScoreList[i][1][j],
+                                name: 'The Cell',
+                                custom: {event: eventNames, outcome: this.OutcomeList[j]}
+                            });
+            }
         }
+        return datalist;
     }
-    return datalist;
-  }
-  
-  //getData2 is for getting initial dummy data to display while subscribe function is running
-  getData2(){ // returns list of dummy objects
-    var datalist = [];
-    for (var i = 0; i < 500; i++){ // row
-        for (var j = 0; j < 45; j++){ // order or cell in row
-            datalist.push({
-                            x: j,
-                            y:i,
-                            value: Math.random(),
-                            name: 'The Cell',
-                            custom: {event: 'eventNames', outcome: 'this.OutcomeList[j]'}
-                        });
+    
+    //getData2 is for getting initial dummy data to display while subscribe function is running
+    getData2(){ // returns list of dummy objects
+        var datalist = [];
+        for (var i = 0; i < 500; i++){ // row
+            for (var j = 0; j < 45; j++){ // order or cell in row
+                datalist.push({
+                                x: j,
+                                y:i,
+                                value: Math.random(),
+                                name: 'The Cell',
+                                custom: {event: 'eventNames', outcome: 'this.OutcomeList[j]'}
+                            });
+            }
         }
+        return datalist;
+    } // end getData2()
+  
+ 
+    ngOnInit() {
+        this.app.show();
+        this.runName = this.runService.runName
+        this.runService.showOutcomeTopics(this.runName).subscribe((val: OutcomeList) => //send http request and results are subscribed into val
+        {
+        
+    
+            this.DataSource1 = new MatTableDataSource(val.Eventlist);
+    
+            var input_listOutcomes = []
+            for(var i = 0; i< this.DataSource1.data[0].Event_Outcome.length;i++){
+                var inputs = String(this.DataSource1.data[0].Event_Outcome[i].OutcomeTopic)
+                input_listOutcomes.push(inputs)
+            }
+            this.OutcomeList = input_listOutcomes
+        
+            this.runService.showEventNames(this.runName).subscribe((val: Run[]) => //send http request and results are subscribed into val
+            {  
+                var input_list_EventNames = []
+                for (var i = 0; i< val.length;i++){
+                    for(var j = 0; j< val[i].Eventlist.length;j++){
+                        var inputS = String(val[i].Eventlist[j].Event)
+                        input_list_EventNames.push(inputS)
+                    }
+                }
+                this.EventNameList = input_list_EventNames
+        
+                this.runService.showScores(this.runName).subscribe((val: Run[]) => //send http request and results are subscribed into val
+                {
+                    var input_list_score = []
+                    for(var i = 0 ; i < val.length; i++){ // for same block and year
+                        for(var j = 0; j < val[i].Eventlist.length; j++){
+                            var inputs =  val[i].Eventlist[j]
+                            input_list_score.push(inputs) 
+                        }
+                    }
+                    this.ScoreList = input_list_score
+                    var final_row_Event_cell_list = {}
+                    for(var row = 0; row < input_list_score.length; row++){
+                        var insidelist = []
+                        for (var index =0; index < input_list_score[row].Event_Outcome.length;index++ ){
+                            insidelist.push((input_list_score[row].Event_Outcome[index].Score))
+                        }
+                        final_row_Event_cell_list[row] = [input_list_score[row].Event,insidelist]
+                    }
+                    this.ScoreList = final_row_Event_cell_list
+                    this.alllist = this.ScoreList
+                    this.options.series[0].data = this.getData();
+                    this.options.xAxis.categories = this.OutcomeList;
+                    this.options.yAxis.categories = this.EventNameList;
+                    for(var i = 0; i < this.OutcomeList.length; i++)
+                        this.OutcomeDict[i] = {id:i, name: (this.OutcomeList[i])}
+                    
+                    this.chart = new Chart(this.options);
+                    this.model = this.OutcomeDict;
+                })
+            })
+        })
     }
-    return datalist;
-  } // end getData2()
-  
-  // showAllRuns(){
-  //   this.runService.showRuns('run1').subscribe((val: Run[]) => //send http request and results are subscribed into val
-  //   {
-  //     console.log("hello from console")
-  //     //this.r = val; //send the results the element r 
-  //     console.log(val)
-  //   })
-  // }
-  // showAllOutcomes(){
-  //   this.runService.showOutcomeTopics().subscribe((val: OutcomeList) => //send http request and results are subscribed into val
-  //   {
-      
-  //   //   console.log("hello from console")
-  //     //this.r = val; //send the results the element r 
-  //     this.DataSource1 = new MatTableDataSource(val.Eventlist);
-  //   //   this.DataSource1.data.paginator = this.paginator;
-  //   //   this.DataSource1.data.sort = this.sort;
-  //   //   console.log(this.DataSource1.data[0].Event_Outcome)// it will get the list of eventOutcome
-  //     var input_listOutcomes = []
-  //     for(var i = 0; i< this.DataSource1.data[0].Event_Outcome.length;i++){
-  //       // console.log(this.DataSource1.data[0].Event_Outcome[i].OutcomeTopic)
-  //       var inputs = String(this.DataSource1.data[0].Event_Outcome[i].OutcomeTopic)
-  //       input_listOutcomes.push(inputs)
-        
-  //     }
-  //     this.OutcomeList = input_listOutcomes
-  //   //   console.log("hello from showAllOutcomes")
-  //   //   console.log(this.OutcomeList)
-      
-  //   })
-  // }
-  // showAllScores(){
-  //   this.runService.showScores().subscribe((val: Run[]) => //send http request and results are subscribed into val
-  //   {
-      
-  //     console.log("hello from showAllScores")
-  //     // console.log(this.OutcomeList)
-  //     //this.r = val; //send the results the element r 
-  //     // console.log(val)
-  //     // console.log(val[0].Eventlist[0]) //for each row 
-  //     var input_list_score = []
-  //     for(var i = 0 ; i < val.length; i++){ // for same block and year
-  //       for(var j = 0; j < val[i].Eventlist.length; j++){
-  //         var inputs =  val[i].Eventlist[j]
-  //         input_list_score.push(inputs) 
-  //       }
-  //     }
-  //     this.ScoreList = input_list_score
-  //     var final_row_Event_cell_list = {}
-  //     for(var row = 0; row < input_list_score.length; row++){
-  //       var insidelist = []
-  //       for (var index =0; index < input_list_score[row].Event_Outcome.length;index++ ){
-  //         // console.log(this.ScoreList[row].Event_Outcome[index].Score)
-  //         insidelist.push((input_list_score[row].Event_Outcome[index].Score))
-  //       }
-  //       // console.log(insidelist)
-  //       final_row_Event_cell_list[row] = [input_list_score[row].Event,insidelist]
-  //     }
-  //     this.ScoreList = final_row_Event_cell_list
-  //   //   console.log(this.ScoreList)
-  //     this.alllist = this.ScoreList
-      
-  //   })
-  // }
-  // showAllEventNames(){
-  //   this.runService.showEventNames().subscribe((val: Run[]) => //send http request and results are subscribed into val
-  //   {
-  //     // console.log("hello from showAllEventNames")
-  //     //this.r = val; //send the results the element r 
-      
-  //     var input_list_EventNames = []
-  //     for (var i = 0; i< val.length;i++){
-  //       // console.log(val[i])
-  //       for(var j = 0; j< val[i].Eventlist.length;j++){
-  //         //console.log(val[i].Eventlist[j])
-  //         var inputS = String(val[i].Eventlist[j].Event)
-  //         input_list_EventNames.push(inputS)
-  //       }
-  //     }
-  //     this.EventNameList = input_list_EventNames
-  //   //   console.log("hello from showAllEventNames")
-  //   //   console.log(this.EventNameList)
-     
-  //   })
-  // }
-
-
-  // constructor() { }
-
-  ngOnInit() {
-    this.app.show();
-   this.runName = this.runService.runName
-   this.runService.showOutcomeTopics(this.runName).subscribe((val: OutcomeList) => //send http request and results are subscribed into val
-    {
-      
-    //   console.log("hello from console")
-      //this.r = val; //send the results the element r 
-      this.DataSource1 = new MatTableDataSource(val.Eventlist);
-    //   this.DataSource1.data.paginator = this.paginator;
-    //   this.DataSource1.data.sort = this.sort;
-    //   console.log(this.DataSource1.data[0].Event_Outcome)// it will get the list of eventOutcome
-      var input_listOutcomes = []
-      for(var i = 0; i< this.DataSource1.data[0].Event_Outcome.length;i++){
-        // console.log(this.DataSource1.data[0].Event_Outcome[i].OutcomeTopic)
-        var inputs = String(this.DataSource1.data[0].Event_Outcome[i].OutcomeTopic)
-        input_listOutcomes.push(inputs)
-        
-      }
-      this.OutcomeList = input_listOutcomes
-    //   console.log("hello from showAllOutcomes")
-    //   console.log(this.OutcomeList)
-    this.runService.showEventNames(this.runName).subscribe((val: Run[]) => //send http request and results are subscribed into val
-    {
-      // console.log("hello from showAllEventNames")
-      //this.r = val; //send the results the element r 
-      
-      var input_list_EventNames = []
-      for (var i = 0; i< val.length;i++){
-        // console.log(val[i])
-        for(var j = 0; j< val[i].Eventlist.length;j++){
-          //console.log(val[i].Eventlist[j])
-          var inputS = String(val[i].Eventlist[j].Event)
-          input_list_EventNames.push(inputS)
-        }
-      }
-      this.EventNameList = input_list_EventNames
-    //   console.log("hello from showAllEventNames")
-    //   console.log(this.EventNameList)
-    this.runService.showScores(this.runName).subscribe((val: Run[]) => //send http request and results are subscribed into val
-    {
-      
-      // console.log("hello from showAllScores")
-      // console.log(this.OutcomeList)
-      //this.r = val; //send the results the element r 
-      // console.log(val)
-      // console.log(val[0].Eventlist[0]) //for each row 
-      var input_list_score = []
-      for(var i = 0 ; i < val.length; i++){ // for same block and year
-        for(var j = 0; j < val[i].Eventlist.length; j++){
-          var inputs =  val[i].Eventlist[j]
-          input_list_score.push(inputs) 
-        }
-      }
-      this.ScoreList = input_list_score
-      var final_row_Event_cell_list = {}
-      for(var row = 0; row < input_list_score.length; row++){
-        var insidelist = []
-        for (var index =0; index < input_list_score[row].Event_Outcome.length;index++ ){
-          // console.log(this.ScoreList[row].Event_Outcome[index].Score)
-          insidelist.push((input_list_score[row].Event_Outcome[index].Score))
-        }
-        // console.log(insidelist)
-        final_row_Event_cell_list[row] = [input_list_score[row].Event,insidelist]
-      }
-      this.ScoreList = final_row_Event_cell_list
-    //   console.log(this.ScoreList)
-      this.alllist = this.ScoreList
-      this.options.series[0].data = this.getData();
-      
-      this.options.xAxis.categories = this.OutcomeList;
-      this.options.yAxis.categories = this.EventNameList;
-    //   this.chart = new Chart(options: this.options);
-    //   this.chart = Highcharts.chart('container', this.options);
-      this.chart = new Chart(this.options);
-    })
-    })
-      
-    })
-  }
-  
-  changeChart(){
-        
-    var selections: any[] = [0,4,13, 45, 15]; 
-    var newCategories = [];
-    var newData = []; 
-    var tempPoint: any;
-    
-
-    for(var i = 0; i < selections.length; i++){
-        newCategories.push(this.options.yAxis.categories[selections[i]]);
-        for (var j = 0; j < this.OutcomeList.length; j++){
-            tempPoint = this.options.series[0].data[selections[i]*this.OutcomeList.length + j];
-            tempPoint.y = i;
-            newData.push(tempPoint);
-        }
-    }
-    this.chart = null;
-    this.options.yAxis.categories = newCategories;
-    this.options.series[0].data = newData;
-    this.changing = false;
-    this.chart = new Chart(this.options);
-    
-    // const self = this,
-    // chart = this.chart;
-
-    // chart.showLoading();
-    // setTimeout(() => {
-    //     chart.hideLoading();
-
-    //     self.options.series = [
-    //     {
-    //         data: newData
-    //     }
-    //     ];
-        
-    //     self.options.yAxis.categories = newCategories;
-
-    //     self.updateFromInput = true;
-    // }, 2000);
-    
-    
-    
- }
   
   
+    changeChart(){      
+        var selections: any[] = [0,4,13, 45, 15]; 
+        var newCategories = [];
+        var newData = []; 
+        var tempPoint: any;
+        
+        for(var i = 0; i < selections.length; i++){
+            newCategories.push(this.options.yAxis.categories[selections[i]]);
+            for (var j = 0; j < this.OutcomeList.length; j++){
+                tempPoint = this.options.series[0].data[selections[i]*this.OutcomeList.length + j];
+                tempPoint.y = i;
+                newData.push(tempPoint);
+            }
+        }
+        this.chart = null;
+        this.options.yAxis.categories = newCategories;
+        this.options.series[0].data = newData;
+        this.changing = false;
+        this.chart = new Chart(this.options);
+        
+        // const self = this,
+        // chart = this.chart;
+
+        // chart.showLoading();
+        // setTimeout(() => {
+        //     chart.hideLoading();
+
+        //     self.options.series = [
+        //     {
+        //         data: newData
+        //     }
+        //     ];
+            
+        //     self.options.yAxis.categories = newCategories;
+
+        //     self.updateFromInput = true;
+        // }, 2000);
+
+    }  
 }
