@@ -24,6 +24,7 @@ import * as exporting from 'highcharts/modules/exporting.src';
 import * as hizzlemap from 'highcharts/modules/heatmap.src';
 import { LoginComponent } from './login/login.component';
 import { ChartsModule } from 'ng2-charts';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 // import * as CanvasJS from '../assets/canvasjs.min.js';
 // import { ChartsModule } from 'ng2-charts';
 import { 
@@ -108,7 +109,8 @@ const MaterialComponents = [
     FormsModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-    ChartsModule
+    ChartsModule,
+    MatCheckboxModule
     
   ],
   providers: [
