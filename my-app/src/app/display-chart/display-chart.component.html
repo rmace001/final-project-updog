@@ -1,5 +1,13 @@
 <!-- <div [chart] ="chart"></div> -->
 <!-- <div *ngIf="isLoaded">Text to show</div> -->
+<div class="example-section">
+        <label class="example-margin">Option:</label>
+        <mat-radio-group [(ngModel)]="labelPosition"  #mySelect (change)='onOptionsSelected(mySelect.value)'>
+          <mat-radio-button class="example-margin" value="normal"  >Origin</mat-radio-button>
+          <mat-radio-button class="example-margin" value="large" >Sort large to small </mat-radio-button>
+          <mat-radio-button class="example-margin" value="small" >Sort small to large </mat-radio-button>
+        </mat-radio-group>
+</div>
 <div>
         <div class="wrapper3" style="height: 40px; width: 100%;" class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <select class='select-option' #mySelect (change)='onOptionsSelected(mySelect.value)'>

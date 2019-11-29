@@ -21,6 +21,7 @@ import { element } from 'protractor';
 })
 export class DisplayChartComponent implements OnInit {
   @ViewChild(BloopComponent, {static:true}) bloop_c;
+  labelPosition = 'start'// use to pick sort=> Origin, Sort large to small, Sort small to large 
   checkButton:boolean = false;
   option
   runchoiceName: string = ""
@@ -124,6 +125,31 @@ calculate(score_list: any [], outcomeName: string){
       var list_display_score = this.ScoreList
       // console.log(this.ScoreList[0][0])
       var dps = []; // dataPoints
+      
+      if(!dps){
+        this.doAdelay();
+      };  
+      var length_list = Object.keys(this.ScoreList).length
+      var score_list = []
+      for (var j = 0; j < length_list; j++) {	
+                    dps.push({
+          y: this.ScoreList[j][1][index],
+          label: this.ScoreList[j][0]
+        });
+        score_list[j] = this.ScoreList[j][1][index]
+            
+      }; 
+      if(this.labelPosition === 'normal')
+        console.log('normal') 
+      if(this.labelPosition === 'large'){
+        dps.sort( (a,b) => (a.y < b.y) ? 1:-1 )
+        console.log("large")
+      }
+      if(this.labelPosition === 'small'){
+        dps.sort( (a,b) => (a.y < b.y) ? -1:1 )
+        console.log("small")
+      }
+      // console.log(dps)
       let chart3 = new CanvasJS.Chart("chartContainer3", {
         animationEnabled: true,
         exportEnabled: true,
@@ -145,21 +171,6 @@ calculate(score_list: any [], outcomeName: string){
 
         }]
       });
-      if(!dps){
-        this.doAdelay();
-      };  
-      var length_list = Object.keys(this.ScoreList).length
-      var score_list = []
-      for (var j = 0; j < length_list; j++) {	
-                    dps.push({
-          y: this.ScoreList[j][1][index],
-          label: this.ScoreList[j][0]
-        });
-        score_list[j] = this.ScoreList[j][1][index]
-            
-      }; 
-      // console.log(dps)
-  
       this.check = true 
       if(!dps){
         this.doAdelay();
