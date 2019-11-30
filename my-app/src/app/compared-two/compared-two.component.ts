@@ -5,6 +5,8 @@ import { Run, OutcomeList} from '../run.model'
 import { Router, ChildActivationEnd } from '@angular/router'
 import * as CanvasJS from '../../assets/canvasjs.min.js';
 import {MatRadioModule} from '@angular/material/radio';
+import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import { Label } from 'ng2-charts';
 import { MatSort, MatSortable, MatPaginator, MatTableDataSource } from '@angular/material';
 @Component({
   selector: 'app-compared-two',
@@ -15,11 +17,12 @@ export class ComparedTwoComponent implements OnInit {
 
   constructor(private runService: RunService, private router: Router, public app: AppComponent) { }
   r: Run[] 
-  Maxvalue1 = 0
+  loadingdata = false
+  Maxvalue1
   Avgvalue1 = 0
-  Maxvalue2 = 0
+  Maxvalue2
   Avgvalue2 = 0
-  dps_list1 
+  dps_max 
   labelPosition = "start"
   checkdetail = "start"
   checked_detail =false
@@ -35,20 +38,37 @@ export class ComparedTwoComponent implements OnInit {
   chart
   check1 = false
   checkpickup = false
-  
+  checkpickup1 = false
+  checkcdetail
   check_detail_score = false
   top10 
   top20
   top30
   checkButton
   checkButton1
+  count_score_temp
+  // save for one score
+  barChartLabels: Label[] = ['0-0.1', '0.1-0.2', '0.2-0.3', '0.3-0.4', '0.4-0.5','0.5-0.6', '0.6-0.7', '0.7-0.8', '0.8-0.9', '0.9-1'];
+  barChartType: ChartType = 'bar';
+  barChartPlugins = [];
+  barChartData: ChartDataSets[]
   doAdelay(){
     setTimeout(function(){return true;},300000);
   };
+  onChartClick(event) {
+    console.log(event);
+  }
+  checksamestring(event){
+    if(this.outcomeName1 === this.outcomeName2){
+      this.barChartData = []
+    }
+  }
   calculate(score_list: any [], outcomeName: string){
     var count_score = [{0.1: 0, 0.2:0, 0.3:0 , 0.4:0 ,0.5:0 , 0.6:0 , 0.7:0 , 0.8:0 , 0.9:0, 1.0:0}] // 0 - 0.1 => 0.1 ++
       // console.log(count_score)
+    var total = 0;
       for(var j = 0; j < score_list.length; j++ ){
+        total += score_list[j]
         if(score_list[j] <0.5){
           if(score_list[j] >= 0.3){
             if(score_list[j] <0.4){
@@ -91,53 +111,31 @@ export class ComparedTwoComponent implements OnInit {
           this.check_detail_score = true
         }
       } // end for loop
-      console.log( "here is detail of ",outcomeName, " = >" ,count_score)
-      this.runService.count_score = count_score
-  }
- 
-runchart(){
-
-  console.log(this.checkdetail)
-  if(this.checkdetail === 'Column'){
-    console.log("this.runchart ++++++++++++")
-    var chart1 = new CanvasJS.Chart("chartContainers", {
-      title:{
-          text: "My First Chart in CanvasJS"              
-      },
-      data: [              
-      {
-          // Change type to "doughnut", "line", "splineArea", etc.
-          type: "column",
-          dataPoints:  [{"label":"A","y":0},{"label":"B","y":5},{"label":"C","y":2},{"label":"D","y":0},{"label":"T","y":7},{"label":"A","y":0},{"label":"B","y":5},{"label":"C","y":2},{"label":"D","y":0},{"label":"T","y":7},{"label":"A","y":0},{"label":"B","y":10},{"label":"C","y":4},{"label":"D","y":0},{"label":"T","y":14}]
+      // console.log( "here is detail of ",outcomeName, " = >" ,count_score)
+      // console.log(this.Avgvalue1)
+      if(!this.checkpickup){ // first calculate
+        // this.Avgvalue1 = total /  score_list.length;
+        this.count_score_temp = count_score
       }
-          ]
-    });
-    if(!chart1.data){
-      console.log("this.runchart -----------")
-      this.doAdelay()
-      chart1.render();
-    }
-   
-  }else if(this.checkdetail === 'Max'){
-    var temp = this.dps_list1
-    console.log(temp)
-    console.log('Max+++++++++ is ',temp.sort( (a,b) => (a.y < b.y) ? 1:-1 ).slice(0,1))
-  }else if(this.checkdetail === 'Avg'){
-    var temp = this.dps_list1
-    var total =0
-    temp.sort( (a,b) => (a.y < b.y) ? 1:-1 )
-    for(var i = 0; i<temp.length;i++){
-      total += temp[i].y
-    }
-    console.log('Avg+++++++++++ is ',total/temp.length) 
-  }
+      if(this.checkpickup){ // first checkpickup is first pick up outcome topic
+        this.barChartData = [
+          {
+            data: [this.count_score_temp[0]["0.1"] , this.count_score_temp[0]["0.2"] ,this.count_score_temp[0]["0.3"], this.count_score_temp[0]["0.4"], this.count_score_temp[0]["0.5"] ,this.count_score_temp[0]["0.6"] , this.count_score_temp[0]["0.7"] ,this.count_score_temp[0]["0.8"], this.count_score_temp[0]["0.9"], this.count_score_temp[0]["1"]], 
+            label: this.outcomeName1
+          },
+          {data: [count_score[0]["0.1"] , count_score[0]["0.2"] ,count_score[0]["0.3"], count_score[0]["0.4"], count_score[0]["0.5"] ,count_score[0]["0.6"] , count_score[0]["0.7"] ,count_score[0]["0.8"], count_score[0]["0.9"], count_score[0]["1"]], 
+          label: this.outcomeName2}
+
+        ];
+      }
+      this.checkpickup = true
+      return ( total /  score_list.length)
   
-}
+  }
 onOptionsSelected(value:string){
-    console.log("here the value is 1: ", value)
-    this.checkpickup = true
-    
-    if(value != "Hi! Please pick up which outcome topic you like in here"){
+    // console.log("here the value is 1: ", value)
+   
+    if(value != "Hi! Please pick up which outcome topic you like in here" ){
       this.checkButton = true;
       // this.runService.outcomeName = value
       // console.log("the selected value is " + value);
@@ -158,34 +156,65 @@ onOptionsSelected(value:string){
       var score_list = []
       for (var j = 0; j < length_list; j++) {	
                     dps1.push({
-          y: this.ScoreList[j][1][index],
+          point: this.ScoreList[j][1][index],
           label: this.ScoreList[j][0]
         });
         score_list[j] = this.ScoreList[j][1][index]
             
       }; 
-      this.dps_list1 = dps1
-      if(this.labelPosition === 'normal')
-        console.log('normal') 
-      if(this.labelPosition === 'large'){
-        dps1.sort( (a,b) => (a.y < b.y) ? 1:-1 )
-        console.log("large",dps1)
-
-      }
-      if(this.labelPosition === 'small'){
-        dps1.sort( (a,b) => (a.y < b.y) ? -1:1 )
-        console.log("small")
-      }
-    
-      this.calculate(score_list, value)
+      
+      this.Maxvalue1 = dps1.sort( (a,b) => (a.point < b.point) ? 1:-1 ).slice(0,1)
+      // console.log("here is dps1 ", dps1.sort( (a,b) => (a.point < b.point) ? 1:-1 ))
+      this.Avgvalue1 = this.calculate(score_list, value)  
     } // end of if-loop for check string is "pick up which outcome topic you want"
     else{
       this.checkButton = false;
-      console.log("pick up which outcome topic you want ++++++++++++++++++++++++++++")
+      // console.log("pick up which outcome topic you want ++++++++++++++++++++++++++++")
     }
     
 }
+onOptionsSelected1(value1:string){
+  // console.log("here the value is 2: ", value1)
+  // if there pick up same data
+  if(value1 != "Hi! Please pick up which outcome topic you like in here"){
+    this.checkButton = true;
+    // this.runService.outcomeName = value
+    // console.log("the selected value is " + value);
+    var local_outcomelist = this.OutcomeList
+    // console.log(local_outcomelist)
+    var index =0;
+    index = local_outcomelist.indexOf(value1)
+    // console.log( "Here is ", index, " The string is ", local_outcomelist[index])
+    this.outcomeName2 = value1
+    // console.log(this.ScoreList)
+    var list_display_score = this.ScoreList
+    // console.log(this.ScoreList[0][0])
+    var dps2 = []; // dataPoints
+    if(!dps2){
+      this.doAdelay();
+    };  
+    var length_list = Object.keys(this.ScoreList).length
+    var score_list = []
+    for (var j = 0; j < length_list; j++) {	
+                  dps2.push({
+        point: this.ScoreList[j][1][index],
+        label: this.ScoreList[j][0]
+      });
+      score_list[j] = this.ScoreList[j][1][index]
 
+    }; 
+    
+    this.Maxvalue2 = dps2.sort( (a,b) => (a.point < b.point) ? 1:-1 ).slice(0,1)
+    // console.log("here is dps2 ", dps2.sort( (a,b) => (a.point < b.point) ? 1:-1 ))
+    this.Avgvalue2 = this.calculate(score_list, value1)  
+    this.checkpickup1 = true
+  } // end of if-loop for check string is "pick up which outcome topic you want"
+  else{
+    this.checkButton = false;
+    // console.log("pick up which outcome topic you want ++++++++++++++++++++++++++++")
+  }
+  
+}
   ngOnInit() {
     this.app.show();
     this.runchoiceName = this.runService.runName
@@ -223,18 +252,11 @@ onOptionsSelected(value:string){
         final_row_Event_cell_list[row] = [input_list_score[row].Event,insidelist]
       }
       this.ScoreList = final_row_Event_cell_list
-      var dps = []; // dataPoints
-      for (var j = 0; j < this.OutcomeList.length; j++) {	
-                  dps.push({
-                    y: this.ScoreList[0][1][j], // 0 is for row, 1 just display list
-                    label: this.OutcomeList[j]
-                  });
-                            
-                }; 
-                
-    })
+      this.loadingdata = true
+    },
+    error => { throw error },
+    () => console.log("finished") )
   
-      
     })
   }
 

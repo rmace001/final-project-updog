@@ -1,70 +1,66 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-<p>compared-two works!</p>
 
 
 
-Here is the Outcome Topic you pick: -> {{outcomeName1}}
-<div class="example-section">
-        <label class="example-margin">Option:</label>
-        <mat-radio-group [(ngModel)]="labelPosition"  #mySelect (change)='onOptionsSelected(mySelect.value)'>
-          <mat-radio-button class="example-margin" value="normal"  >Origin</mat-radio-button>
-          <mat-radio-button class="example-margin" value="large" >Sort large to small </mat-radio-button>
-          <mat-radio-button class="example-margin" value="small" >Sort small to large </mat-radio-button>
-        </mat-radio-group>
-</div>
-<div  class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <select class='select-option' #mySelect (change)='onOptionsSelected(mySelect.value)'>
-       <option class='option' *ngFor='let item of outcomed' [value]="item.name">{{item.name}}</option>
-    </select>
-</div>
-
-<!-- <div id="chartContainer1" style="height: 500px; width: 100%;">
+<!-- Here is the Outcome Topic you pick: -> {{outcomeName1}} -->
+<div *ngIf="!loadingdata">
         <div class="loader"></div>
-        <div class="d-flex justify-content-center">
-                <div class="spinner-grow text-primary" style="width: 8rem; height: 8rem;" role="status">
-                <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow text-secondary"style="width: 8rem; height: 8rem;"role="status">
-                <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow text-success"  style="width: 8rem; height: 8rem;"role="status">
-                <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow text-danger" style="width: 8rem; height: 8rem;" role="status">
-                <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow text-warning" style="width: 8rem; height: 8rem;" role="status">
-                <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow text-info" style="width: 8rem; height: 8rem;" role="status">
-                <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow text-light"style="width: 8rem; height: 8rem;" role="status">
-                <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow text-dark"  style="width: 8rem; height: 8rem;"role="status">
-                <span class="sr-only">Loading...</span>
-                </div>    
+</div>
+<div *ngIf="loadingdata">
+        <div  class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <select class='select-option' #mySelect (change)='onOptionsSelected(mySelect.value)'>
+        <option class='option' *ngFor='let item of outcomed' [value]="item.name">{{item.name}}</option>
+        </select>
         </div>
-</div> -->
-<div *ngIf = 'checkpickup'>
-        <div class="checkup-section">
-                <label class="example-margin">Option:</label>
-                <mat-radio-group [(ngModel)]="checkdetail" #mySelect (change)='runchart($event)'>
-                  <mat-radio-button class="example-margin" value="Column">Column</mat-radio-button>
-                  <mat-radio-button class="example-margin" value="Max" >Max </mat-radio-button>
-                  <mat-radio-button class="example-margin" value="Avg" >Avg </mat-radio-button>
-                </mat-radio-group>
-        </div>
-        <div id="chartContainers" style="height: 500px; width: 100%;" *ngIf='checkdetail === "Column"'> here is column
-        </div>
-        <div *ngIf='checkdetail === "Max"'> here is Max</div>
-        <div *ngIf='checkdetail === "Avg"'> here is Avg</div>
-
 </div>
 
+<div *ngIf='checkpickup' class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <select class='select-option' #mySelect (change)='onOptionsSelected1(mySelect.value)'>
+               <option class='option' *ngFor='let item of outcomed' [value]="item.name">{{item.name}}</option>
+            </select>
+</div>
+
+<div *ngIf='checkpickup && checkpickup1'>
+        <div *ngIf ="outcomeName1!=outcomeName2">
+                <div>
+                        <mat-radio-group [(ngModel)]="checkdetail" >
+                                <mat-radio-button value="chart">Column</mat-radio-button>
+                                <mat-radio-button value="Max" >Max </mat-radio-button>
+                                <mat-radio-button value="Avg" >Avg </mat-radio-button>
+                        </mat-radio-group>
+                </div>
+                <div *ngIf='checkdetail === "Max"'> <p>The Max Score first Event is: {{Maxvalue1[0].label}} -> {{Maxvalue1[0].point}} </p> 
+                                The Max Score of second Event is : {{Maxvalue2[0].label}} -> {{Maxvalue2[0].point}} 
+                </div>
+                <div *ngIf='checkdetail === "Avg"'><p>The avg of {{outcomeName1}} is {{Avgvalue1}}</p> 
+                                The avg of {{outcomeName2}} is {{Avgvalue2}}
+                </div>
+                <div *ngIf='checkdetail === "chart"'> 
+                        <div class="chart-wrapper">
+                                <!-- here have some problem : : Cannot read property 'legend' of undefined 
+                                use ng-chart2-x -->
+                                <canvas baseChart 
+                                [datasets]="barChartData"
+                                [labels]="barChartLabels"
+                                [options]="barChartOptions"
+                                [chartType]="barChartType">
+                                </canvas>
+                        </div>
+                </div>
+        </div>
+</div>
+<!-- <div *ngIf='checkpickup && checkpickup1'>
+        <div *ngIf ="outcomeName1===outcomeName2">
+                <h1>Please pick up two different outcome Topic</h1>
+        </div>
+</div>                  -->
+<div *ngIf='checkpickup && checkpickup1'>
+                <div *ngIf ="checksamestring($Event)">
+                        <h1>Please pick up two different outcome Topic</h1>
+                </div>
+        </div>   
 
 <div class="wrapper3">
         <button mat-raised-button class="btn btn-primary" routerLink="/bloop">Return to previous page</button>

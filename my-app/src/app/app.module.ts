@@ -23,7 +23,7 @@ import * as more from 'highcharts/highcharts-more.src';
 import * as exporting from 'highcharts/modules/exporting.src';
 import * as hizzlemap from 'highcharts/modules/heatmap.src';
 import { LoginComponent } from './login/login.component';
-import { ChartsModule } from 'ng2-charts';
+import { ChartsModule } from 'ng2-charts-x';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 // import * as CanvasJS from '../assets/canvasjs.min.js';
 // import { ChartsModule } from 'ng2-charts';
