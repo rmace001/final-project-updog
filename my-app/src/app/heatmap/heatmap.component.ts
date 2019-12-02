@@ -40,10 +40,14 @@ export class HeatmapComponent implements OnInit {
         chart: {
             type: 'heatmap',
             zoomType: 'xy',
-            height: 1700,
-            width: 1200,
-            margin: [80, 5, 400, 230],
-            spacing: [10, 10, 100, 10]
+            // height: 2300,
+            // width: 100%,
+            scrollablePlotArea: {
+                minHeight: 4000,
+                opacity: 0.4
+            }
+            // margin: [80, 5, 400, 230],
+            // spacing: [10, 10, 100, 10]
         },
         exporting: {
             enabled: true
@@ -73,9 +77,9 @@ export class HeatmapComponent implements OnInit {
             labels: {
                 // reserveSpace: true
             },
-            scrollbar: {
-                enabled: true
-            } 
+            // scrollbar: {
+            //     enabled: true
+            // } 
         },
         yAxis: {
             title: {
@@ -86,13 +90,15 @@ export class HeatmapComponent implements OnInit {
             categories: ['this.EventNameList'],
             scrollbar: {
                 enabled: true
-            }
-            //   tickLength: 100
+            },
+            tickLength: 25,
+            // lineWidth: 1,
+            allowDecimals: false
               
         },
         legend:{
-            align: 'center',
-            verticalAlign: 'top',
+            align: 'left',
+            verticalAlign: 'bottom',
             floating: true        
         },
         colorAxis: {
@@ -113,7 +119,7 @@ export class HeatmapComponent implements OnInit {
         },
         plotOptions: {
             series: {
-                
+                animation: true
             },
             heatmap: {
                 rowsize: 1
@@ -122,16 +128,18 @@ export class HeatmapComponent implements OnInit {
         series: [
             {
                 type: undefined,
-                name: 'Curriculum Mapping',
-                turboThreshold: 60000,
+                name: 'this.runName',
+                turboThreshold: 0,
                 // data: this.getData(),
                 // be sure to update the series data in the update function
                 data: this.getData2(),
-                boostThreshold: 60000,
-                borderWidth: 0,
+                // boostThreshold: 60000,
+                // borderWidth: 1,
+                // borderHeight: 1,
                 nullColor: '#EFEFEF',
                 tooltip: {
                     // headerFormat: '<span style="font-size: 10px">{point.key}</span><br/>',
+                    headerFormat: '<small>{series.name}</small><br/>',
                     pointFormat: '<b>Event: </b> {point.custom.event} <br/><b>Outcome: </b>{point.custom.outcome} <br/><b>Score: </b>{point.value}'
                 }
             }
@@ -233,6 +241,7 @@ export class HeatmapComponent implements OnInit {
                     this.options.series[0].data = this.getData();
                     this.options.xAxis.categories = this.OutcomeList;
                     this.options.yAxis.categories = this.EventNameList;
+                    this.options.series[0].name = this.runName;
                     for(var i = 0; i < this.OutcomeList.length; i++)
                         this.OutcomeDict[i] = {id:i, name: (this.OutcomeList[i])}
                     
