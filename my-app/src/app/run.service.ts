@@ -11,27 +11,27 @@ export class RunService {
   top10score = []
   top20score = []
   top30score = []
-  serverURLi = "http://localhost:4000" // this is the server the backend is running from 
+  serverURLi = "http://localhost:4000" 
   constructor(private http: HttpClient) {}
   showRuns(run: string)
   {
     var url = this.serverURLi + "/listFromRun/" + run
-    return this.http.get(url) // http get from localhost:4000/listFromRun1
+    return this.http.get(url)
   }
   showScores(run: string)
   {
     var url = this.serverURLi + "/listScoresAndEventName/" + run
-    return this.http.get(url) // http get from localhost:4000/listFromRun1
+    return this.http.get(url) 
   }
   showOutcomeTopics(run: string)
   {
     var url = this.serverURLi + "/listOutcomes/" + run
-    return this.http.get(url) // http get from localhost:4000/listFromRun1
+    return this.http.get(url)
   }
   showEventNames(run: string)
   {
     var url = this.serverURLi + "/listEvents/" + run
-    return this.http.get(url) // http get from localhost:4000/listFromRun1
+    return this.http.get(url) 
   }
   showScoreWithNames(r, e, o)
   {
@@ -53,18 +53,4 @@ export class RunService {
     var url = this.serverURLi + "/listRunWithSpecifics/" + r + "/" + y  + "/" + b
     return this.http.get(url) 
   }
-
-//   postCelltoRun(b:Number, y:Number, e:String, o:String, s:Number)
-//   {
-//     const p = {
-//       Block: b,
-//       Year: y,
-//       Event: e,
-//       OutcomeTopic: o,
-//       Score: s
-//     }
-//     //console.log("adding person")
-//     var url = this.serverURLi + "/addCelltoRun1"
-//     return this.http.post(url, p) // http post to localhost:4000/addCelltoRun1
-//   }
 }

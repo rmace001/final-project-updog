@@ -13,7 +13,7 @@ export class UserService {
     lastname: String;
     validLog: boolean;
 
-    serverURLi = "http://localhost:4000" // this is the server the backend is running from 
+    serverURLi = "http://localhost:4000" 
     constructor(private http: HttpClient) {
     }
 
@@ -50,8 +50,8 @@ export class UserService {
         Password: p
         }
         console.log("adding person")
-        var url = this.serverURLi + "/addCelltoRun1"
-        return this.http.post(url, q) // http post to localhost:4000/addCelltoRun1
+        var url = this.serverURLi + "/addUserToUserCollection"
+        return this.http.post(url, q) 
     }
     getUserID(user, pass)
     {
