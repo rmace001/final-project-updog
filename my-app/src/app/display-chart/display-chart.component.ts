@@ -38,6 +38,7 @@ export class DisplayChartComponent implements OnInit {
   top10 
   top20
   top30
+  loadingdata = false
   public radarChartLabels_less5 = ['0-0.1', '0.1-0.2', '0.2-0.3', '0.3-0.4', '0.4-0.5'];
   public  radarChartLabels_big5 = [ '0.5-0.6', '0.6-0.7', '0.7-0.8', '0.8-0.9', '0.9-1'];
   public radarChartData_less5 = [];
@@ -131,14 +132,15 @@ calculate(score_list: any [], outcomeName: string){
       };  
       var length_list = Object.keys(this.ScoreList).length
       var score_list = []
+      
       for (var j = 0; j < length_list; j++) {	
                     dps.push({
           y: this.ScoreList[j][1][index],
           label: this.ScoreList[j][0]
         });
         score_list[j] = this.ScoreList[j][1][index]
-            
       }; 
+      this.runService.scorelist = this.ScoreList
       if(this.labelPosition === 'normal')
         console.log('normal') 
       if(this.labelPosition === 'large'){
@@ -149,6 +151,25 @@ calculate(score_list: any [], outcomeName: string){
         dps.sort( (a,b) => (a.y < b.y) ? -1:1 )
         console.log("small")
       }
+      if(this.labelPosition === 'Top10percent'){
+        var long30percent = length_list/10
+        // console.log(long30percent)
+        dps = dps.sort( (a,b) => (a.y < b.y) ? 1:-1 ).slice(0,long30percent)
+        // console.log("large Top 10% ", dps)
+      }
+      if(this.labelPosition === 'Top20percent'){
+        var long30percent = length_list/5
+        // console.log(long30percent)
+        dps = dps.sort( (a,b) => (a.y < b.y) ? 1:-1 ).slice(0,long30percent)
+        // console.log("large Top 20% ", dps)
+      }
+      if(this.labelPosition === 'Top30percent'){
+        var long30percent = length_list/3
+        // console.log(long30percent)
+        dps = dps.sort( (a,b) => (a.y < b.y) ? 1:-1 ).slice(0,long30percent)
+        // console.log("large Top 30% ", dps)
+      }
+      
       // console.log(dps)
       let chart3 = new CanvasJS.Chart("chartContainer3", {
         animationEnabled: true,
@@ -216,6 +237,7 @@ calculate(score_list: any [], outcomeName: string){
       }
       this.outcomed = list_o
       this.OutcomeList = input_listOutcomes
+      this.runService.outcomeNamelist = this.OutcomeList
       this.runService.showScores(this.runchoiceName).subscribe((val: Run[]) => //send http request and results are subscribed into val
     {
 
@@ -244,6 +266,7 @@ calculate(score_list: any [], outcomeName: string){
                   });
                             
                 }; 
+      this.loadingdata = true
                 
     })
   

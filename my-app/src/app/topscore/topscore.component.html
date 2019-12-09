@@ -11,20 +11,29 @@
             <mat-radio-button class = "radiospace" value="3">Top 30</mat-radio-button><br>
         </mat-radio-group>
         <!-- <div>Your favorite season is: {{favoriteSeason}}</div> -->
+        0.85+0.83+0.75+0.69+0.67+0.64+0.6+0.59+0.58+0.58 = 6.78
 </div>
 
 <div class="item 4" style="height: 500px; width: 100%; float: left;" *ngIf="radioChoice == 1?true:false">
         <table class='table'>
-        <option class='option' *ngFor='let item of top10' [value]="item.y">{{item.y}} =>{{item.label}} </option>
+        <option class='option1' *ngFor='let item of top10' [value]="item.y">{{item.y}} =>{{item.label}} </option>
         </table>
+        <p>Here is the total score of top10 event for each 47 outcome</p>
+        <li *ngFor="let item of top10score_total; let i = index">
+                {{ item }} {{outcomelist[i]}}
+        </li>
+        <!-- <li *ngFor = "let item of top10score_total">
+                {{item.outcomename}} => {{item.totalscore}}
+        </li> -->
 </div>
+
 <div class="item 4" style="height: 500px; width: 100%; float: left;" *ngIf="radioChoice == 2?true:false">
         <table class='table'>
-        <option class='option' *ngFor='let item of top20' [value]="item.y">{{item.y}} =>{{item.label}} </option>
+        <option class='option2' *ngFor='let item of top20' [value]="item.y">{{item.y}} =>{{item.label}} </option>
         </table>
 </div>
 <div class="item 4" style="height: 500px; width: 100%; float: left;" *ngIf="radioChoice == 3?true:false">
         <table class='table'>
-        <option class='option' *ngFor='let item of top30' [value]="item.y">{{item.y}} =>{{item.label}} </option>
+        <option class='option3' *ngFor='let item of top30' [value]="item.y">{{item.y}} =>{{item.label}} </option>
         </table>
 </div>

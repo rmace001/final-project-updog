@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
 export class RunService {
   runName = ""
   outcomeName = ""
+  outcomeNamelist =[]
+  scorelist = []
   count_score = []
   top10score = []
   top20score = []

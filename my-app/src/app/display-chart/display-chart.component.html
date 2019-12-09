@@ -1,81 +1,115 @@
 <!-- <div [chart] ="chart"></div> -->
 <!-- <div *ngIf="isLoaded">Text to show</div> -->
-<div class="example-section">
-        <label class="example-margin">Option:</label>
-        <mat-radio-group [(ngModel)]="labelPosition"  #mySelect (change)='onOptionsSelected(mySelect.value)'>
-          <mat-radio-button class="example-margin" value="normal"  >Origin</mat-radio-button>
-          <mat-radio-button class="example-margin" value="large" >Sort large to small </mat-radio-button>
-          <mat-radio-button class="example-margin" value="small" >Sort small to large </mat-radio-button>
-        </mat-radio-group>
-</div>
-<div>
-        <div class="wrapper3" style="height: 40px; width: 100%;" class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <select class='select-option' #mySelect (change)='onOptionsSelected(mySelect.value)'>
-               <option class='option' *ngFor='let item of outcomed' [value]="item.name">{{item.name}}</option>
-            </select>
-        </div>
-</div>
-
-
-Here is the Outcome Topic you pick: -> {{outcomeName}}
-<!-- <div>   
-        pie chart
-        <div id="chartContainer1" style="height: 500px; width: 100%;"  >
-                <div class="loader"></div>
-        </div>
-        column chart
-        <div id="chartContainer2" style="height: 500px; width: 100%;">
-                <div class="loader"></div>    
-        </div>
-</div> -->
-
-<div id="chartContainer3" style="height: 500px; width: 100%;">
-        <!-- <div class="loader"></div> -->
+<div *ngIf="!loadingdata">
         <div class="d-flex justify-content-center">
-                <div class="spinner-grow text-primary" style="width: 8rem; height: 8rem;" role="status">
-                <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow text-secondary"style="width: 8rem; height: 8rem;"role="status">
-                <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow text-success"  style="width: 8rem; height: 8rem;"role="status">
-                <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow text-danger" style="width: 8rem; height: 8rem;" role="status">
-                <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow text-warning" style="width: 8rem; height: 8rem;" role="status">
-                <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow text-info" style="width: 8rem; height: 8rem;" role="status">
-                <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow text-light"style="width: 8rem; height: 8rem;" role="status">
-                <span class="sr-only">Loading...</span>
-                </div>
-                <div class="spinner-grow text-dark"  style="width: 8rem; height: 8rem;"role="status">
-                <span class="sr-only">Loading...</span>
-                </div>    
-        </div>
-        <!-- </div> -->
+                        <div class="spinner-grow text-primary" style="width: 8rem; height: 8rem;" role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-secondary"style="width: 8rem; height: 8rem;"role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-success"  style="width: 8rem; height: 8rem;"role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-danger" style="width: 8rem; height: 8rem;" role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-warning" style="width: 8rem; height: 8rem;" role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-info" style="width: 8rem; height: 8rem;" role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-light"style="width: 8rem; height: 8rem;" role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow text-dark"  style="width: 8rem; height: 8rem;"role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>    
+        </div>  
 </div>
 
-<div *ngIf="check_detail_score" class="chartshow">
-        <div class="chart1" style="display: block;  width: 50%;"  >
-                <canvas baseChart
-                        [datasets]="radarChartData_less5"
-                        [labels]="radarChartLabels_less5"
-                        [chartType]="radarChartType"></canvas>
-        </div>
-        <div  class="chart2"  style="display: block;  width: 50%;" >
-                <canvas baseChart
-                        [datasets]="radarChartData_big5"
-                        [labels]="radarChartLabels_big5"
-                        [chartType]="radarChartType"></canvas>
-        </div>
+<div *ngIf="loadingdata">
+                <div class="example-section">
+                                <label class="example-margin">Option:</label>
+                                <mat-radio-group [(ngModel)]="labelPosition"  #mySelect (change)='onOptionsSelected(mySelect.value)'>
+                                  <mat-radio-button class="example-margin" value="normal"  >Origin</mat-radio-button>
+                                  <mat-radio-button class="example-margin" value="large" >Sort by large to small </mat-radio-button>
+                                  <mat-radio-button class="example-margin" value="Top10percent" >Show Top 10% data</mat-radio-button>
+                                  <mat-radio-button class="example-margin" value="Top20percent" >Show Top 20% data</mat-radio-button>
+                                  <mat-radio-button class="example-margin" value="Top30percent" >Show Top 30% data</mat-radio-button>
+                                  <mat-radio-button class="example-margin" value="small" >Sort by small to large </mat-radio-button>
+                                </mat-radio-group>
+                        </div>
+                        <div>
+                                <div class="wrapper3" style="height: 40px; width: 100%;" class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <select class='select-option' #mySelect (change)='onOptionsSelected(mySelect.value)'>
+                                       <option class='option' *ngFor='let item of outcomed' [value]="item.name">{{item.name}}</option>
+                                    </select>
+                                </div>
+                        </div>
+                        
+                        
+                        Here is the Outcome Topic you pick: -> {{outcomeName}}
+                        <!-- <div>   
+                                pie chart
+                                <div id="chartContainer1" style="height: 500px; width: 100%;"  >
+                                        <div class="loader"></div>
+                                </div>
+                                column chart
+                                <div id="chartContainer2" style="height: 500px; width: 100%;">
+                                        <div class="loader"></div>    
+                                </div>
+                        </div> -->
+                        
+                        <div id="chartContainer3" style="height: 500px; width: 100%;">
+                                <!-- <div class="loader"></div> -->
+                                <div class="d-flex justify-content-center">
+                                        <div class="spinner-grow text-primary" style="width: 8rem; height: 8rem;" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <div class="spinner-grow text-secondary"style="width: 8rem; height: 8rem;"role="status">
+                                        <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <div class="spinner-grow text-success"  style="width: 8rem; height: 8rem;"role="status">
+                                        <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <div class="spinner-grow text-danger" style="width: 8rem; height: 8rem;" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <div class="spinner-grow text-warning" style="width: 8rem; height: 8rem;" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <div class="spinner-grow text-info" style="width: 8rem; height: 8rem;" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <div class="spinner-grow text-light"style="width: 8rem; height: 8rem;" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <div class="spinner-grow text-dark"  style="width: 8rem; height: 8rem;"role="status">
+                                        <span class="sr-only">Loading...</span>
+                                        </div>    
+                                </div>
+                                <!-- </div> -->
+                        </div>
+                        
+                        <div *ngIf="check_detail_score" class="chartshow">
+                                <div class="chart1" style="display: block;  width: 50%;"  >
+                                        <canvas baseChart
+                                                [datasets]="radarChartData_less5"
+                                                [labels]="radarChartLabels_less5"
+                                                [chartType]="radarChartType"></canvas>
+                                </div>
+                                <div  class="chart2"  style="display: block;  width: 50%;" >
+                                        <canvas baseChart
+                                                [datasets]="radarChartData_big5"
+                                                [labels]="radarChartLabels_big5"
+                                                [chartType]="radarChartType"></canvas>
+                                </div>
+                        </div>
+                        
+                        
 </div>
-
-
  <div>
                 <div class="wrapper3">
                                 <button mat-raised-button class="btn btn-primary" routerLink="/bloop">Return to previous page</button>
