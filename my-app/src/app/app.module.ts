@@ -110,7 +110,8 @@ const MaterialComponents = [
     ReactiveFormsModule,
     MatAutocompleteModule,
     ChartsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatButtonModule
     
   ],
   providers: [
