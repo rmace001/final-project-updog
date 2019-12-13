@@ -224,7 +224,7 @@ onOptionsSelected1(value1:string){
       this.DataSource1 = new MatTableDataSource(val.Eventlist);
       var input_listOutcomes = []
       var list_o = []
-      list_o[0] = {id:0, name: "Hi! Please pick up which outcome topic you like in here"}
+      list_o[0] = {id:0, name: "Hi! Please pick two outcome topics to compare"}
       for(var i = 0; i< this.DataSource1.data[0].Event_Outcome.length;i++){
         var inputs = String(this.DataSource1.data[0].Event_Outcome[i].OutcomeTopic)
         input_listOutcomes.push(inputs)

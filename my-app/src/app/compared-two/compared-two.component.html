@@ -6,7 +6,9 @@
 
 <!-- Here is the Outcome Topic you pick: -> {{outcomeName1}} -->
 <div *ngIf="!loadingdata">
+        <div class="loadspace">
         <div class="loader"></div>
+        </div>
 </div>
 <div *ngIf="loadingdata">
         <div  class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -26,9 +28,9 @@
         <div *ngIf ="outcomeName1!=outcomeName2">
                 <div>
                         <mat-radio-group [(ngModel)]="checkdetail" >
-                                <mat-radio-button value="chart">Column</mat-radio-button>
-                                <mat-radio-button value="Max" >Max </mat-radio-button>
-                                <mat-radio-button value="Avg" >Avg </mat-radio-button>
+                                <mat-radio-button class = "radiospace" value="chart">Column</mat-radio-button>
+                                <mat-radio-button class = "radiospace" value="Max" >Max </mat-radio-button>
+                                <mat-radio-button class = "radiospace"  value="Avg" >Average </mat-radio-button>
                         </mat-radio-group>
                 </div>
                 <div *ngIf='checkdetail === "Max"'> <p>The Max Score of first Event is: {{Maxvalue1[0].label}} -> {{Maxvalue1[0].point}} </p> 
@@ -62,6 +64,7 @@
                 </div>
         </div>   
 
-<div class="wrapper3">
-        <button mat-raised-button class="btn btn-primary" routerLink="/bloop">Return to previous page</button>
+
+<div class="wrapper">
+        <button mat-raised-button class="btnn" routerLink="/bloop">Return to previous page</button>
 </div>   

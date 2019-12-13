@@ -20,6 +20,33 @@
     margin-right: auto
   }
 
+  .radiospace{
+    margin: 1em;
+}
+
+.loadspace{
+  padding-top: 10%
+}
+
+.btnn{
+  margin: auto;
+  display:block;
+  background-color: lightgreen;
+  color: black;
+  font: 700 1.2rem 'Roboto Slab', sans-serif;
+  padding: 1em;
+  letter-spacing: 0.05rem;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.wrapper {
+  text-align: center;
+  margin-top: 100px;
+  margin-bottom: 30px;
+}
 
   @keyframes spin {
     0% { transform: rotate(0deg); }

@@ -112,7 +112,7 @@ calculate(score_list: any [], outcomeName: string){
 }
   onOptionsSelected(value:string){
     
-    if(value != "Hi! Please pick up which outcome topic you like in here"){
+    if(value != "Hi! Please choose an outcome topic before selecting a filtering option"){
       this.checkButton = true;
       this.runService.outcomeName = value
       // console.log("the selected value is " + value);
@@ -229,7 +229,7 @@ calculate(score_list: any [], outcomeName: string){
       this.DataSource1 = new MatTableDataSource(val.Eventlist);
       var input_listOutcomes = []
       var list_o = []
-      list_o[0] = {id:0, name: "Hi! Please pick up which outcome topic you like in here"}
+      list_o[0] = {id:0, name: "Hi! Please choose an outcome topic before selecting a filtering option"}
       for(var i = 0; i< this.DataSource1.data[0].Event_Outcome.length;i++){
         var inputs = String(this.DataSource1.data[0].Event_Outcome[i].OutcomeTopic)
         input_listOutcomes.push(inputs)

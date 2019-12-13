@@ -1,6 +1,10 @@
 <!-- <div [chart] ="chart"></div> -->
 <!-- <div *ngIf="isLoaded">Text to show</div> -->
 <div *ngIf="!loadingdata">
+        <div class="loadspace">
+                <div class="wrapper2">
+                <h1>.....Loading.....</h1>
+                </div>
         <div class="d-flex justify-content-center">
                         <div class="spinner-grow text-primary" style="width: 8rem; height: 8rem;" role="status">
                         <span class="sr-only">Loading...</span>
@@ -26,19 +30,20 @@
                         <div class="spinner-grow text-dark"  style="width: 8rem; height: 8rem;"role="status">
                         <span class="sr-only">Loading...</span>
                         </div>    
+                </div>
         </div>  
 </div>
 
 <div *ngIf="loadingdata">
                 <div class="example-section">
-                                <label class="example-margin">Option:</label>
+                                <label class="example-margin">Select a Filtering Option:</label>
                                 <mat-radio-group [(ngModel)]="labelPosition"  #mySelect (change)='onOptionsSelected(mySelect.value)'>
-                                  <mat-radio-button class="example-margin" value="normal"  >Origin</mat-radio-button>
-                                  <mat-radio-button class="example-margin" value="large" >Sort by large to small </mat-radio-button>
-                                  <mat-radio-button class="example-margin" value="Top10percent" >Show Top 10% data</mat-radio-button>
-                                  <mat-radio-button class="example-margin" value="Top20percent" >Show Top 20% data</mat-radio-button>
-                                  <mat-radio-button class="example-margin" value="Top30percent" >Show Top 30% data</mat-radio-button>
-                                  <mat-radio-button class="example-margin" value="small" >Sort by small to large </mat-radio-button>
+                                  <mat-radio-button class="radiospace" value="normal" >Default (Unsorted)</mat-radio-button>
+                                  <mat-radio-button class="radiospace" value="large" >Sort by large to small </mat-radio-button>
+                                  <mat-radio-button class="radiospace" value="Top10percent" >Show Top 10%</mat-radio-button>
+                                  <mat-radio-button class="radiospace" value="Top20percent" >Show Top 20%</mat-radio-button>
+                                  <mat-radio-button class="radiospace" value="Top30percent" >Show Top 30%</mat-radio-button>
+                                  <mat-radio-button class="radiospace" value="small" >Sort by small to large </mat-radio-button>
                                 </mat-radio-group>
                         </div>
                         <div>
@@ -50,7 +55,7 @@
                         </div>
                         
                         
-                        Here is the Outcome Topic you pick: -> {{outcomeName}}
+                        Here is the Outcome Topic you picked: -> {{outcomeName}}
                         <!-- <div>   
                                 pie chart
                                 <div id="chartContainer1" style="height: 500px; width: 100%;"  >
@@ -64,6 +69,9 @@
                         
                         <div id="chartContainer3" style="height: 500px; width: 100%;">
                                 <!-- <div class="loader"></div> -->
+                                <div class="wrapper2">
+                                        <h1>.....Waiting for Selection.....</h1>
+                                </div>
                                 <div class="d-flex justify-content-center">
                                         <div class="spinner-grow text-primary" style="width: 8rem; height: 8rem;" role="status">
                                         <span class="sr-only">Loading...</span>
@@ -111,13 +119,13 @@
                         
 </div>
  <div>
-                <div class="wrapper3">
-                                <button mat-raised-button class="btn btn-primary" routerLink="/bloop">Return to previous page</button>
+                <div class="wrapper">
+                                <button mat-raised-button class="btnn" routerLink="/bloop">Return to previous page</button>
                 </div>    
          </div>
         
          <div>
-                <div class="wrapper4" *ngIf = "this.checkButton">
-                                <button mat-raised-button class="btn btn-primary" routerLink="/topscore">Show top score</button>
+                <div class="wrapper" *ngIf = "this.checkButton">
+                                <button mat-raised-button class="btnn2" routerLink="/topscore">Show top score</button>
                 </div>    
 </div>
