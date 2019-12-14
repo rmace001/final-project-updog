@@ -58,10 +58,15 @@ Please checkout our GitHub Project Board!
     - Click Security -> Network Access
     - Add your IP Address by clicking the button
 - Instructions on how to process and store run file on database
-    - Assuming you have a Mac or Linux command line environment which has Python 3 installed:
-    - Open a terminal and change to the directory of the desired run file you wish to store
-    - Use the python file in `path-to-python-script-in-repo` to process run file and generate a JSON file of the same data
-    - That JSON file can be manually uploaded as a collection in MongoDB
+    - Assuming you have a Mac or Linux command line environment which has Python installed:
+    - Add your run `.xlsx` files to the folder: `final-project-updog/data_transfer/dataInput/`
+    - Remove all files in `final-project-updog/data_transfer/dataOutput1/` 
+    - Use the python file `final-project-updog/data_transfer/csvParseScriptTodata1.py` to generate a JSON file of run data
+        - Open a terminal and change directory to `final-project-updog/data_transfer/`
+        - run: `python csvParseScriptTodata1.py`
+            - JSON files will be created for every file in `final-project-updog/data_transfer/dataInput/`
+    - Each JSON file can be manually uploaded as a collection in MongoDB
+        - example: `mongoimport --host Cluster0-shard-0/cluster0-shard-00-00-sl1km.mongodb.net:27017,cluster0-shard-00-01-sl1km.mongodb.net:27017,cluster0-shard-00-02-sl1km.mongodb.net:27017 --ssl --username nguyenalice66 --password <PASSWORD> --authenticationDatabase admin --db <DATABASE> --collection <COLLECTION> --type <FILETYPE> --file <FILENAME>`
     - Login MongoDB.Atlas
     - Check the Left navigation bar of the page
     - Click ATLAS->Clusters->collections
