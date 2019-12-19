@@ -1,7 +1,7 @@
 # Final Project Updog: Curriculum Mapping Visualization
 final-project-updog created by GitHub Classroom
 
-MEAN Stack Web Application
+MEAN stack web application created for database systems senior design @UCR
 
 Please checkout our GitHub Project Board!
 
